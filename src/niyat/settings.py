@@ -10,3 +10,4 @@ class Settings(BaseSettings):
     openai_reasoning_effort: str = "low"
     intake_timeout_seconds: float = 25.0
     round_seconds: int = 0
+    warmup_rounds: int = 24

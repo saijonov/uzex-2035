@@ -5,7 +5,7 @@ from niyat.settings import Settings
 
 
 def client():
-    return TestClient(create_app(Settings(_env_file=None, openai_api_key="")))
+    return TestClient(create_app(Settings(_env_file=None, openai_api_key="", warmup_rounds=0)))
 
 
 def test_full_buyer_flow_through_the_api():
@@ -43,3 +43,52 @@ def test_pages_are_served():
     c = client()
     assert c.get("/").status_code == 200
     assert c.get("/market").status_code == 200
+
+
+def test_trading_flow_buy_hold_sell_and_portfolio():
+    c = TestClient(create_app(Settings(_env_file=None, openai_api_key="", warmup_rounds=3)))
+    inst = c.get("/api/instruments").json()["instruments"]
+    m400 = next(i for i in inst if i["id"] == "cement_325")
+    assert len(m400["history"]) == 3 and m400["plants"]
+    preview = c.post(
+        "/api/order",
+        json={
+            "session": "t",
+            "product": "cement_325",
+            "tonnes": 5,
+            "limit": 1_500_000,
+            "preview": True,
+        },
+    ).json()
+    assert not preview["submitted"] and any(n["code"] == "hold_info" for n in preview["notices"])
+    placed = c.post(
+        "/api/order",
+        json={"session": "t", "product": "cement_325", "tonnes": 5, "limit": 1_500_000},
+    ).json()
+    assert placed["submitted"] and placed["intent"]["hold"]
+    c.post("/api/round")
+    folio = c.get("/api/portfolio", params={"session": "t"}).json()
+    assert folio["holdings"] and folio["intents"][0]["status"] == "matched"
+    h = folio["holdings"][0]
+    sold = c.post(
+        "/api/sell",
+        json={"session": "t", "receipt": h["id"], "tonnes": h["free"], "min_price": 400_000},
+    ).json()
+    assert sold["sell"]["status"] == "waiting"
+    c.post(
+        "/api/alerts",
+        json={"session": "t", "product": "cement_325", "direction": "above", "price": 1},
+    )
+    c.post("/api/round")
+    folio = c.get("/api/portfolio", params={"session": "t", "lang": "ru"}).json()
+    assert folio["sells"][0]["status"] == "sold"
+    assert folio["alerts"][0]["status"] == "fired"
+
+
+def test_order_without_money_is_blocked():
+    c = client()
+    r = c.post(
+        "/api/order",
+        json={"session": "p", "product": "cement_325", "tonnes": 100, "limit": 1_000_000},
+    ).json()
+    assert not r["submitted"] and r["notices"][0]["level"] == "block"
