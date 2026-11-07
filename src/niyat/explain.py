@@ -35,6 +35,7 @@ TEXT = {
         "held": "{t} t sotib olindi va zavod omborida saqlanmoqda. Tonnasi {price}.",
         "plain_hold": "Narx qanday chiqdi: {seller} zavodi narxi {ask}. Bu raundda sement yetarli edi, narx ko‘tarilmadi.",
         "scarce_hold": "Narx qanday chiqdi: xaridorlar ko‘p bo‘lgani uchun {seller} zavodi narxi {ask}dan {plant}ga chiqdi.",
+        "money_hold": "Hisobdan yechildi: sement {cost} + birja yig‘imlari {fees}. Qaytarildi: {refund}.",
         "receipt": "Portfelingizda turibdi: istalgan raundda sotishingiz yoki uyga yetkazishni so‘rashingiz mumkin.",
         "above_hold": "Bu raundda zavod narxi tonnasiga {price} bo‘ldi, sizning chegarangiz {limit}. Keyingi raundda {suggest} qo‘ysangiz, olish ehtimoli yuqori.",
         "sell_waiting": "{t} t sotuvga qo‘yildi, eng kami tonnasiga {min}. {round}-raundni kutmoqda.",
@@ -66,6 +67,7 @@ TEXT = {
         "held": "Куплено {t} т, хранится на складе завода. {price} за тонну.",
         "plain_hold": "Как сложилась цена: цена завода {seller} {ask}. Цемента хватало, цена не выросла.",
         "scarce_hold": "Как сложилась цена: покупателей было больше, цена завода {seller} выросла с {ask} до {plant}.",
+        "money_hold": "Списано: цемент {cost} + сборы биржи {fees}. Возвращено: {refund}.",
         "receipt": "Товар в вашем портфеле: можно продать в любом раунде или заказать доставку.",
         "above_hold": "Цена завода в этом раунде была {price} за тонну, ваш предел {limit}. Поставьте {suggest} в следующем раунде — шанс высокий.",
         "sell_waiting": "{t} т выставлено на продажу, минимум {min} за тонну. Ждём раунд №{round}.",
@@ -185,7 +187,9 @@ def explain_hold(live: LiveIntent, record: RoundRecord, lang: str) -> dict:
         lines.append(t["saved"].format(limit=m(intent.limit), saved=m(saved)))
     if fill.reason == "partial":
         lines.append(t["rest"].format(rest=tonnes(round(intent.quantity - fill.filled, 3))))
-    lines.append(t["money"].format(cost=m(live.cost), fees=m(live.fees), refund=m(live.refund)))
+    lines.append(
+        t["money_hold"].format(cost=m(live.cost), fees=m(live.fees), refund=m(live.refund))
+    )
     lines.append(t["receipt"])
     return {
         "headline": t["held"].format(t=tonnes(fill.filled), price=m(fill.price)),
