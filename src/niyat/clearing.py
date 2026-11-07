@@ -26,7 +26,7 @@ class Offer:
 class Intent:
     id: str
     owner: str
-    region: str
+    region: str | None
     product: str
     quantity: float
     limit: float
@@ -75,7 +75,9 @@ class RoundResult:
     traded: float
 
 
-def route(offer: Offer, region: str) -> tuple[float, float, int]:
+def route(offer: Offer, region: str | None) -> tuple[float, float, int]:
+    if region is None:
+        return 0.0, 0.0, 0
     km = distance_km(offer.region, region)
     return km, freight_per_tonne(km), delivery_days(km)
 
@@ -212,7 +214,8 @@ def clear(offers: list[Offer], intents: list[Intent]) -> RoundResult:
     regions_by_intent = {b.id: b.region for b in intents}
     for allocations in by_intent.values():
         for a in allocations:
-            grouped[(a.offer_id, regions_by_intent[a.intent_id])].append(a)
+            if regions_by_intent[a.intent_id] is not None:
+                grouped[(a.offer_id, regions_by_intent[a.intent_id])].append(a)
     shipments = []
     for (offer_id, region), allocations in sorted(grouped.items()):
         tonnes = sum(a.tonnes for a in allocations)
