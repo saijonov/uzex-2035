@@ -26,12 +26,54 @@ class Restriction:
 
 
 RESTRICTED: tuple[Restriction, ...] = (
-    Restriction("ai80", "AI-80 benzin", "бензин АИ-80", "faqat yoqilg‘i quyish shoxobchalari", "только автозаправочные станции", ("ai-80", "ai80", "аи-80", "аи80")),
-    Restriction("wheat", "Bug‘doy", "пшеница", "un ishlab chiqaruvchi korxonalar ro‘yxati bo‘yicha", "мукомольные предприятия по списку", ("bug'doy", "bugdoy", "bug‘doy", "пшениц")),
-    Restriction("cotton", "Paxta tolasi", "хлопковое волокно", "qayta ishlash quvvati bor korxonalar", "предприятия с мощностями переработки", ("paxta tolasi", "хлопковое волокно", "хлопок")),
-    Restriction("alcohol", "Iste’mol etil spirti", "пищевой этиловый спирт", "litsenziyasi bor ishlab chiqaruvchilar", "лицензированные производители", ("spirt", "спирт")),
-    Restriction("oil", "Neft va gaz kondensati", "нефть и газовый конденсат", "litsenziyasi bor korxonalar", "лицензированные предприятия", ("neft", "нефть", "kondensat", "конденсат")),
-    Restriction("precious", "Oltin va kumush", "золото и серебро", "zargarlik buyumlari ishlab chiqaruvchilar", "производители ювелирных изделий", ("oltin", "kumush", "золот", "серебр")),
+    Restriction(
+        "ai80",
+        "AI-80 benzin",
+        "бензин АИ-80",
+        "faqat yoqilg‘i quyish shoxobchalari",
+        "только автозаправочные станции",
+        ("ai-80", "ai80", "аи-80", "аи80"),
+    ),
+    Restriction(
+        "wheat",
+        "Bug‘doy",
+        "пшеница",
+        "un ishlab chiqaruvchi korxonalar ro‘yxati bo‘yicha",
+        "мукомольные предприятия по списку",
+        ("bug'doy", "bugdoy", "bug‘doy", "пшениц"),
+    ),
+    Restriction(
+        "cotton",
+        "Paxta tolasi",
+        "хлопковое волокно",
+        "qayta ishlash quvvati bor korxonalar",
+        "предприятия с мощностями переработки",
+        ("paxta tolasi", "хлопковое волокно", "хлопок"),
+    ),
+    Restriction(
+        "alcohol",
+        "Iste’mol etil spirti",
+        "пищевой этиловый спирт",
+        "litsenziyasi bor ishlab chiqaruvchilar",
+        "лицензированные производители",
+        ("spirt", "спирт"),
+    ),
+    Restriction(
+        "oil",
+        "Neft va gaz kondensati",
+        "нефть и газовый конденсат",
+        "litsenziyasi bor korxonalar",
+        "лицензированные предприятия",
+        ("neft", "нефть", "kondensat", "конденсат"),
+    ),
+    Restriction(
+        "precious",
+        "Oltin va kumush",
+        "золото и серебро",
+        "zargarlik buyumlari ishlab chiqaruvchilar",
+        "производители ювелирных изделий",
+        ("oltin", "kumush", "золот", "серебр"),
+    ),
 )
 
 EXCHANGE_FEE_BUYER = 0.0013
