@@ -91,6 +91,18 @@ class SellOrder:
 
 
 @dataclass
+class Alert:
+    id: str
+    account_id: str
+    product: str
+    direction: str
+    price: float
+    status: str = "active"
+    round: int | None = None
+    value: float | None = None
+
+
+@dataclass
 class RoundRecord:
     number: int
     at: datetime
@@ -139,6 +151,7 @@ class Exchange:
         self.live: dict[str, LiveIntent] = {}
         self.receipts: dict[str, Receipt] = {}
         self.sells: dict[str, SellOrder] = {}
+        self.alerts: dict[str, Alert] = {}
         self.rounds: list[RoundRecord] = []
         self.counter = itertools.count(1)
         for _ in range(warmup):
@@ -339,7 +352,27 @@ class Exchange:
                 plant_region_prices(offers, result),
             )
             self.rounds.append(record)
+            self.check_alerts(record)
             return record
+
+    def add_alert(self, account_id: str, product: str, direction: str, price: float) -> Alert:
+        with self.lock:
+            if direction not in ("below", "above") or product not in PRODUCTS or price <= 0:
+                raise ValueError("bad_alert")
+            alert = Alert(f"al-{next(self.counter)}", account_id, product, direction, float(price))
+            self.alerts[alert.id] = alert
+            return alert
+
+    def check_alerts(self, record: RoundRecord) -> None:
+        for alert in self.alerts.values():
+            value = record.index.get(alert.product)
+            if alert.status != "active" or value is None:
+                continue
+            hit = value <= alert.price if alert.direction == "below" else value >= alert.price
+            if hit:
+                alert.status = "fired"
+                alert.round = record.number
+                alert.value = value
 
     def settle_buy(self, lv, result, number, now, by_offer, shipments) -> None:
         fill = result.fills[lv.intent.id]
