@@ -227,3 +227,26 @@ body.detail #screen { padding-bottom: calc(var(--tabs) + 160px + env(safe-area-i
 }
 [hidden] { display: none !important; }
 .map { position: relative; z-index: 0; isolation: isolate; }
+.eyebrow { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: var(--ink-2); margin-bottom: 4px; padding: 3px 9px 3px 7px; border-radius: 999px; background: var(--sunken); }
+.eyebrow svg.i { width: 14px; height: 14px; }
+.picker { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 24px 0 40px; }
+.brand { text-align: center; margin-bottom: 18px; }
+.brand h1 { font-size: 34px; margin-top: 12px; }
+.brand p { margin: 6px 0 0; }
+.logo { width: 64px; height: 64px; border-radius: 20px; display: inline-grid; place-items: center; background: var(--ink); color: var(--bg); }
+.logo svg.i { width: 32px; height: 32px; }
+.pick { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; padding: 18px 16px; border-radius: 20px; background: var(--card); box-shadow: var(--shadow); }
+.pick:active { transform: scale(0.99); }
+.pick b { display: block; font-size: 18px; margin-bottom: 2px; }
+.pick .sub { white-space: normal; }
+.pick > svg.i { color: var(--ink-3); }
+.pick-ic { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; flex: none; background: var(--accent-soft); color: var(--accent); }
+.pick-ic svg.i { width: 26px; height: 26px; }
+.note.center { text-align: center; }
+.truckbar { height: 10px; border-radius: 5px; margin: 10px 0 8px; background: repeating-linear-gradient(90deg, var(--sunken) 0 18px, var(--line) 18px 20px); overflow: hidden; }
+.truckbar i { display: block; height: 100%; background: var(--accent); border-radius: 5px; }
+.info.blue { background: var(--accent-soft); color: var(--ink); }
+.info.blue svg.i { color: var(--accent); }
+.new { display: inline-block; padding: 0 6px; border-radius: 6px; background: var(--down); color: #fff; font-size: 11px; font-weight: 700; margin-right: 2px; }
+.price-in { width: 150px; height: 44px; border: 0; border-radius: 12px; background: var(--sunken); text-align: right; padding: 0 12px; font-size: 17px; font-weight: 650; outline: 0; }
+.btn svg.i { width: 20px; height: 20px; }
