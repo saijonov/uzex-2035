@@ -17,7 +17,7 @@ from .regions import REGIONS
 from .settings import Settings
 
 WEB = Path(__file__).parent / "web"
-log = logging.getLogger("bozor")
+log = logging.getLogger("uzcom")
 
 
 class ChatIn(BaseModel):
@@ -59,7 +59,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     settings = settings or Settings()
     market = Market(settings.data_dir)
     usage: dict = {"day": date.today(), "total": 0, "users": Counter()}
-    app = FastAPI(title="Bozor", docs_url=None, redoc_url=None)
+    app = FastAPI(title="UzCom", docs_url=None, redoc_url=None)
 
     def region_of(region: str) -> str:
         if region not in REGIONS:

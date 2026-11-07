@@ -2,9 +2,9 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from bozor.app import create_app
-from bozor.chat import rules
-from bozor.settings import Settings
+from uzcom.app import create_app
+from uzcom.chat import rules
+from uzcom.settings import Settings
 
 DATA = Path(__file__).resolve().parents[1] / "data"
 

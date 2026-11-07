@@ -8,8 +8,8 @@ import duckdb
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from bozor.goods import GOODS
-from bozor.regions import REGISTRY
+from uzcom.goods import GOODS
+from uzcom.regions import REGISTRY
 
 DEMO_STOCK = {"sugar": [5, 3, 3, 2]}
 

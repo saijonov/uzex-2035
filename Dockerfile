@@ -9,4 +9,4 @@ COPY data ./data
 RUN uv sync --locked --no-dev --no-editable && useradd --uid 10001 --create-home app
 USER app
 EXPOSE 8000
-CMD ["/app/.venv/bin/uvicorn", "bozor.app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["/app/.venv/bin/uvicorn", "uzcom.app:app", "--host", "0.0.0.0", "--port", "8000"]

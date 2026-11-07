@@ -8,7 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from bozor.regions import REGIONS
+from uzcom.regions import REGIONS
 
 OSRM = "https://router.project-osrm.org/route/v1/driving/{}?overview=simplified&geometries=geojson"
 VALLEY = {"andijan", "fergana", "namangan"}
@@ -35,7 +35,7 @@ def km(a: tuple[float, float], b: tuple[float, float]) -> float:
 
 def fetch(points: list[tuple[float, float]]) -> dict:
     path = ";".join(f"{lon},{lat}" for lat, lon in points)
-    request = urllib.request.Request(OSRM.format(path), headers={"User-Agent": "bozor-demo/0.2"})
+    request = urllib.request.Request(OSRM.format(path), headers={"User-Agent": "uzcom-demo/0.2"})
     with urllib.request.urlopen(request, timeout=30) as response:
         route = json.load(response)["routes"][0]
     line = [(round(lat, 3), round(lon, 3)) for lon, lat in route["geometry"]["coordinates"]]

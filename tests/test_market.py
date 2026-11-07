@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from bozor.goods import CLEARING_FEE, EXCHANGE_FEE, FREIGHT_PER_TONNE_KM
-from bozor.market import Market
+from uzcom.goods import CLEARING_FEE, EXCHANGE_FEE, FREIGHT_PER_TONNE_KM
+from uzcom.market import Market
 
 DATA = Path(__file__).resolve().parents[1] / "data"
 
