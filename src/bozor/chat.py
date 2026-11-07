@@ -150,7 +150,8 @@ def reply(draft: Draft, market: Market) -> tuple[str, str | None, dict | None]:
     if not sellers:
         return f"Hozir {name} sotuvchisi yo‘q.", None, plan
     if plan["short"] and draft.whole:
-        text = f"Bozorda hozir faqat {plan['filled']} t {name.lower()} bor. Siz {draft.tonnes} t ni birdan so‘radingiz. {plan['filled']} t olasizmi yoki kutamizmi?"
+        text = f"Bozorda hozir faqat {plan['filled']} t {name.lower()} bor. Siz {draft.tonnes} tonnani birdan so‘radingiz. {plan['filled']} t olasizmi yoki kutamizmi?"
+        return text, None, plan
     elif plan["short"]:
         text = (
             f"Bozorda hozir faqat {plan['filled']} t bor. Shuni {sellers} ta sotuvchidan yig‘dim."
