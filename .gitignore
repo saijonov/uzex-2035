@@ -12,3 +12,4 @@ var/
 *.sqlite3
 server/
 .DS_Store
+.claude/
