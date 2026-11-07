@@ -27,6 +27,7 @@
 .zones th { text-align: left; font-size: 12px; color: var(--text-secondary); font-weight: 500; padding: 6px 8px; border-bottom: 1px solid var(--border); }
 .zones th.n, .zones td.n { text-align: right; }
 .zones td { padding: 7px 8px; border-bottom: 1px solid var(--border); font-size: 14px; }
+.zones td.n { white-space: nowrap; }
 .zones tr.row { cursor: pointer; }
 .zones tr.row:hover td { background: var(--surface-2); }
 .zones tr.sel td { background: var(--surface-2); font-weight: 600; }
