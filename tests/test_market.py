@@ -67,3 +67,32 @@ def test_one_seller_plan(market):
     seller = market.offers("rice", "tashkent_city")[-1]
     plan = market.plan("rice", 2, "tashkent_city", seller=seller["id"])
     assert [p["seller"]["id"] for p in plan["parts"]] == [seller["id"]]
+
+
+def test_shared_truck_is_cheaper_than_own_truck(market):
+    plan = market.plan("sugar", 10, "samarkand")
+    assert plan["delivery_solo"] > plan["delivery"]
+    for p in plan["parts"]:
+        assert p["others"] == p["trucks"] * 20 - p["tonnes"]
+        assert p["solo"] == p["trucks"] * p["km"] * FREIGHT_PER_TONNE_KM * 20
+
+
+def test_pool_leaves_room_in_one_truck(market):
+    pool = market.pool("flour", "samarkand")
+    assert pool["filled"] + pool["free"] == 20 and pool["buyers"] >= 2
+    assert pool["truck"] == pool["km"] * FREIGHT_PER_TONNE_KM * 20
+
+
+def test_seller_sees_requests_and_net_price(market):
+    wants = [{"good": "sugar", "region": "samarkand", "tonnes": 7}]
+    items = market.requests("navoi", wants)
+    assert items[0]["mine"] and items[0]["tonnes"] == 7
+    assert all(i["net"] == i["limit"] - i["freight"] for i in items)
+    assert len({i["good"] for i in items}) == 12
+
+
+def test_sale_pays_seller_minus_fees(market):
+    sale = market.sale("cement", 20, 950_000, "navoi", "samarkand")
+    assert sale["cost"] == 19_000_000
+    assert sale["payout"] == 19_000_000 - 9_500 - 9_500
+    assert sale["buyer_price"] == 950_000 + sale["parts"][0]["freight"]
