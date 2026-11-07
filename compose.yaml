@@ -1,0 +1,21 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    mem_limit: 300m
+
+  tunnel:
+    image: cloudflare/cloudflared:2026.7.2
+    command: tunnel --no-autoupdate --url http://app:8000
+    restart: unless-stopped
+    depends_on:
+      - app
+    mem_limit: 150m
