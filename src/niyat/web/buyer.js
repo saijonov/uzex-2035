@@ -264,12 +264,6 @@ function start() {
   refresh();
 }
 
-document.querySelectorAll(".lang button").forEach((b) =>
-  b.addEventListener("click", () => {
-    lang = b.dataset.lang;
-    start();
-  })
-);
 
 document.getElementById("composer").addEventListener("submit", (e) => {
   e.preventDefault();
