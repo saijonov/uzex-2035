@@ -185,6 +185,13 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.state.niyat = state
     app.mount("/static", StaticFiles(directory=WEB), name="static")
 
+    @app.middleware("http")
+    async def no_stale_pages(request, call_next):
+        response = await call_next(request)
+        if not request.url.path.startswith("/api/"):
+            response.headers["Cache-Control"] = "no-cache"
+        return response
+
     @app.get("/")
     def buyer_page():
         return FileResponse(WEB / "index.html")

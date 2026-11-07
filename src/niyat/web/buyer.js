@@ -233,7 +233,12 @@ async function refresh() {
   try {
     const data = await api(`/api/intents?session=${session}&lang=${lang}`);
     setWallet(data.account);
-    for (const intent of data.intents) {
+    for (const intent of [...data.intents].reverse()) {
+      if (!tracked.has(intent.id)) {
+        const created = el("div", { class: "card result" });
+        thread.append(created);
+        tracked.set(intent.id, created);
+      }
       const holder = tracked.get(intent.id);
       if (holder && holder.dataset.status !== intent.status + intent.round) {
         holder.dataset.status = intent.status + intent.round;
