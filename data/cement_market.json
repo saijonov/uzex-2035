@@ -1,0 +1,303 @@
+{
+ "source": "Fictional UZEX hackathon registry, cement deals in 2026",
+ "sellers": [
+  {
+   "name": "\"Xamum Sement\" MChJ",
+   "region": "tashkent_city",
+   "product": "cement_325",
+   "deals": 1568,
+   "median_price": 950587.0,
+   "tonnes": 249301.0
+  },
+  {
+   "name": "CHECHO‘T STROY MAS’ULIYATI CHEKLANGAN JAMIYATI",
+   "region": "karakalpakstan",
+   "product": "cement_325",
+   "deals": 828,
+   "median_price": 984801.0,
+   "tonnes": 133570.0
+  },
+  {
+   "name": "\"Xunaxon Stroy\" MChJ",
+   "region": "samarkand",
+   "product": "cement_325",
+   "deals": 812,
+   "median_price": 985360.0,
+   "tonnes": 129599.0
+  },
+  {
+   "name": "\"Begohuz Qurilish\" OK",
+   "region": "karakalpakstan",
+   "product": "cement_325",
+   "deals": 600,
+   "median_price": 984065.0,
+   "tonnes": 104301.0
+  },
+  {
+   "name": "FICHO‘R STROY OK",
+   "region": "tashkent_city",
+   "product": "cement_325",
+   "deals": 438,
+   "median_price": 969634.0,
+   "tonnes": 62396.0
+  },
+  {
+   "name": "\"Qabechuz Stroy\" OK",
+   "region": "tashkent_city",
+   "product": "cement_325",
+   "deals": 328,
+   "median_price": 920406.0,
+   "tonnes": 49137.0
+  },
+  {
+   "name": "\"Sadem Qurilish\" MChJ",
+   "region": "tashkent_city",
+   "product": "cement_325",
+   "deals": 285,
+   "median_price": 1000749.0,
+   "tonnes": 48317.0
+  },
+  {
+   "name": "\"Fuxum Stroy\" MChJ",
+   "region": "tashkent",
+   "product": "cement_425",
+   "deals": 258,
+   "median_price": 1087971.0,
+   "tonnes": 41586.0
+  },
+  {
+   "name": "\"Sadem Qurilish\" MChJ",
+   "region": "tashkent_city",
+   "product": "cement_425",
+   "deals": 186,
+   "median_price": 1101838.0,
+   "tonnes": 29415.0
+  },
+  {
+   "name": "\"ЗИҲУМЕ ҚУРИЛИШ\" МЧЖ",
+   "region": "kashkadarya",
+   "product": "cement_325",
+   "deals": 170,
+   "median_price": 960619.0,
+   "tonnes": 28154.0
+  },
+  {
+   "name": "\"Qabechuz Stroy\" OK",
+   "region": "tashkent_city",
+   "product": "cement_425",
+   "deals": 211,
+   "median_price": 1114480.0,
+   "tonnes": 27714.0
+  },
+  {
+   "name": "SHAFEM SEMENT MAS’ULIYATI CHEKLANGAN JAMIYATI",
+   "region": "syrdarya",
+   "product": "cement_325",
+   "deals": 181,
+   "median_price": 955004.0,
+   "tonnes": 27701.0
+  },
+  {
+   "name": "BUTOT SEMENT MCHJ",
+   "region": "jizzakh",
+   "product": "cement_425",
+   "deals": 165,
+   "median_price": 1149801.0,
+   "tonnes": 26932.0
+  },
+  {
+   "name": "CHECHO‘T STROY MAS’ULIYATI CHEKLANGAN JAMIYATI",
+   "region": "karakalpakstan",
+   "product": "cement_425",
+   "deals": 147,
+   "median_price": 1027739.0,
+   "tonnes": 24749.0
+  },
+  {
+   "name": "FELU QURILISH MCHJ",
+   "region": "surkhandarya",
+   "product": "cement_425",
+   "deals": 144,
+   "median_price": 1101217.0,
+   "tonnes": 24120.0
+  },
+  {
+   "name": "SHAFEM SEMENT MAS’ULIYATI CHEKLANGAN JAMIYATI",
+   "region": "syrdarya",
+   "product": "cement_425",
+   "deals": 145,
+   "median_price": 1120660.0,
+   "tonnes": 22857.0
+  },
+  {
+   "name": "GICHASHO STROY QK",
+   "region": "namangan",
+   "product": "cement_325",
+   "deals": 128,
+   "median_price": 979378.0,
+   "tonnes": 20885.0
+  },
+  {
+   "name": "LUTIXO QURILISH MAS’ULIYATI CHEKLANGAN JAMIYATI",
+   "region": "tashkent",
+   "product": "cement_325",
+   "deals": 107,
+   "median_price": 941534.0,
+   "tonnes": 19521.0
+  },
+  {
+   "name": "SUKO‘M QURILISH XK",
+   "region": "fergana",
+   "product": "cement_325",
+   "deals": 114,
+   "median_price": 993119.0,
+   "tonnes": 19300.0
+  },
+  {
+   "name": "\"Yuzu Qurilish\" MChJ",
+   "region": "tashkent_city",
+   "product": "cement_425",
+   "deals": 124,
+   "median_price": 1110346.0,
+   "tonnes": 18559.0
+  },
+  {
+   "name": "\"СИСОВУ СЕМЕНТ\" МЧЖ",
+   "region": "tashkent",
+   "product": "cement_325",
+   "deals": 116,
+   "median_price": 945504.0,
+   "tonnes": 18302.0
+  },
+  {
+   "name": "\"Shiqo‘m Qurilish\" MChJ",
+   "region": "tashkent",
+   "product": "cement_325",
+   "deals": 116,
+   "median_price": 987768.0,
+   "tonnes": 18229.0
+  },
+  {
+   "name": "\"Yuzu Qurilish\" MChJ",
+   "region": "tashkent_city",
+   "product": "cement_325",
+   "deals": 119,
+   "median_price": 927600.0,
+   "tonnes": 16154.0
+  },
+  {
+   "name": "CHIHIL STROY MAS’ULIYATI CHEKLANGAN JAMIYATI",
+   "region": "bukhara",
+   "product": "cement_425",
+   "deals": 94,
+   "median_price": 1120747.0,
+   "tonnes": 16110.0
+  },
+  {
+   "name": "\"Begohuz Qurilish\" OK",
+   "region": "karakalpakstan",
+   "product": "cement_425",
+   "deals": 99,
+   "median_price": 1116283.0,
+   "tonnes": 15190.0
+  },
+  {
+   "name": "\"Xamum Sement\" MChJ",
+   "region": "tashkent_city",
+   "product": "cement_425",
+   "deals": 76,
+   "median_price": 1120741.0,
+   "tonnes": 14602.0
+  },
+  {
+   "name": "\"Mate Stroy\" MChJ",
+   "region": "andijan",
+   "product": "cement_425",
+   "deals": 84,
+   "median_price": 1198882.0,
+   "tonnes": 14425.0
+  },
+  {
+   "name": "BUTOT SEMENT MCHJ",
+   "region": "jizzakh",
+   "product": "cement_325",
+   "deals": 47,
+   "median_price": 943917.0,
+   "tonnes": 9522.0
+  },
+  {
+   "name": "\"Likom Qurilish\" MChJ",
+   "region": "tashkent",
+   "product": "cement_325",
+   "deals": 65,
+   "median_price": 1028353.0,
+   "tonnes": 8652.0
+  },
+  {
+   "name": "\"Mate Stroy\" MChJ",
+   "region": "andijan",
+   "product": "cement_325",
+   "deals": 65,
+   "median_price": 924471.0,
+   "tonnes": 7982.0
+  }
+ ],
+ "buyers": {
+  "kashkadarya": {
+   "deals": 526,
+   "median_tonnes": 98.0
+  },
+  "andijan": {
+   "deals": 471,
+   "median_tonnes": 99.0
+  },
+  "surkhandarya": {
+   "deals": 311,
+   "median_tonnes": 95.0
+  },
+  "namangan": {
+   "deals": 758,
+   "median_tonnes": 96.0
+  },
+  "khorezm": {
+   "deals": 383,
+   "median_tonnes": 101.0
+  },
+  "navoi": {
+   "deals": 412,
+   "median_tonnes": 92.0
+  },
+  "karakalpakstan": {
+   "deals": 412,
+   "median_tonnes": 96.0
+  },
+  "bukhara": {
+   "deals": 413,
+   "median_tonnes": 100.0
+  },
+  "syrdarya": {
+   "deals": 216,
+   "median_tonnes": 114.0
+  },
+  "samarkand": {
+   "deals": 657,
+   "median_tonnes": 106.0
+  },
+  "tashkent_city": {
+   "deals": 1743,
+   "median_tonnes": 98.0
+  },
+  "jizzakh": {
+   "deals": 459,
+   "median_tonnes": 92.0
+  },
+  "tashkent": {
+   "deals": 812,
+   "median_tonnes": 99.0
+  },
+  "fergana": {
+   "deals": 431,
+   "median_tonnes": 96.0
+  }
+ }
+}
