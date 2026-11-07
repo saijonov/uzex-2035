@@ -10,7 +10,7 @@ boshlash" in Xaridlarim so the cement truck is half way and the flour has arrive
 | 0:30–0:55 | Search "shakar": a year of prices, sellers with the price delivered to your city and how often they deliver on time. |
 | 0:55–1:35 | AI: "Samarqandga 10 tonna shakar kerak". Nobody has 10 t; the AI gathers 5 + 2 + 3 t from three sellers. The card shows the shared-truck delivery next to what an own truck would cost. Confirm. |
 | 1:35–1:55 | Map: three trucks driving to Samarqand on real roads. Money is blocked until you accept. |
-| 1:55–2:10 | Flour page: "Birga olish" — a truck 15 of 20 t full, join with 5 t, delivery about 20× cheaper. |
+| 1:55–2:10 | Flour page (Toshkent): "Birga olish" — a truck 15 of 20 t full. Join with 5 t: delivery 132 300 so'm a tonne instead of 2 646 000 for a whole truck (529 200 a tonne for 5 t), 4× cheaper. |
 | 2:10–2:45 | Switch to Sotuvchiman. Talab: what buyers lack, where, and what is left after delivery. Send an offer: "Xaridor puli bloklangan ✓". Press "Yukni jo'natdim". |
 | 2:45–3:00 | 2035: buyers and sellers meet on the exchange directly. Many sellers → one buyer, many buyers → one truck, money safe on both sides. |
 
