@@ -32,6 +32,17 @@ TEXT = {
         "waiting": "Niyatingiz qabul qilindi. Pul bloklandi va {round}-raundni kutmoqda.",
         "delivered": "Sement yetib keldi. Pul zavodga va tashuvchiga o‘tkazildi.",
         "cancelled": "Niyat bekor qilindi. Pul to‘liq qaytdi.",
+        "held": "{t} t sotib olindi va zavod omborida saqlanmoqda. Tonnasi {price}.",
+        "plain_hold": "Narx qanday chiqdi: {seller} zavodi narxi {ask}. Bu raundda sement yetarli edi, narx ko‘tarilmadi.",
+        "scarce_hold": "Narx qanday chiqdi: xaridorlar ko‘p bo‘lgani uchun {seller} zavodi narxi {ask}dan {plant}ga chiqdi.",
+        "receipt": "Portfelingizda turibdi: istalgan raundda sotishingiz yoki uyga yetkazishni so‘rashingiz mumkin.",
+        "above_hold": "Bu raundda zavod narxi tonnasiga {price} bo‘ldi, sizning chegarangiz {limit}. Keyingi raundda {suggest} qo‘ysangiz, olish ehtimoli yuqori.",
+        "sell_waiting": "{t} t sotuvga qo‘yildi, eng kami tonnasiga {min}. {round}-raundni kutmoqda.",
+        "sell_sold": "{t} t sotildi: tonnasi {price}. Hisobingizga {net} tushdi (yig‘imlar {fees}).",
+        "sell_partial": "{t} t sotildi ({q} t dan): tonnasi {price}. Hisobingizga {net} tushdi. Qolgani portfelda.",
+        "sell_unsold": "Bu raundda sotilmadi: bozor narxi siz so‘ragan {min}dan past bo‘ldi. Tovar portfelda qoldi.",
+        "sell_note": "Siz so‘ragan eng kam narxni emas, raunddagi bozor narxini olasiz.",
+        "sell_cancelled": "Sotuv bekor qilindi.",
     },
     "ru": {
         "bought": "Куплено {t} т: {price} за тонну с доставкой до вас.",
@@ -52,6 +63,17 @@ TEXT = {
         "waiting": "Намерение принято. Деньги заблокированы, ждём раунд №{round}.",
         "delivered": "Цемент доставлен. Деньги переведены заводу и перевозчику.",
         "cancelled": "Намерение отменено. Деньги полностью возвращены.",
+        "held": "Куплено {t} т, хранится на складе завода. {price} за тонну.",
+        "plain_hold": "Как сложилась цена: цена завода {seller} {ask}. Цемента хватало, цена не выросла.",
+        "scarce_hold": "Как сложилась цена: покупателей было больше, цена завода {seller} выросла с {ask} до {plant}.",
+        "receipt": "Товар в вашем портфеле: можно продать в любом раунде или заказать доставку.",
+        "above_hold": "Цена завода в этом раунде была {price} за тонну, ваш предел {limit}. Поставьте {suggest} в следующем раунде — шанс высокий.",
+        "sell_waiting": "{t} т выставлено на продажу, минимум {min} за тонну. Ждём раунд №{round}.",
+        "sell_sold": "Продано {t} т по {price} за тонну. На счёт поступило {net} (сборы {fees}).",
+        "sell_partial": "Продано {t} т (из {q} т) по {price} за тонну. На счёт поступило {net}. Остаток в портфеле.",
+        "sell_unsold": "В этом раунде не продано: рынок был ниже вашего минимума {min}. Товар остался в портфеле.",
+        "sell_note": "Вы получаете рыночную цену раунда, а не свой минимум.",
+        "sell_cancelled": "Продажа отменена.",
     },
 }
 
@@ -74,7 +96,9 @@ def explain(
     if live.status == "cancelled":
         return {"headline": t["cancelled"], "lines": []}
     assert fill is not None and record is not None
-    zone = region_name(intent.region, lang)
+    zone = region_name(intent.region, lang) if intent.region else None
+    if fill.filled and live.hold:
+        return explain_hold(live, record, lang)
     if fill.filled:
         key = "bought" if fill.reason == "filled" else "partial"
         headline = t[key].format(
@@ -115,7 +139,12 @@ def explain(
         elif live.eta:
             lines.append(t["eta"].format(date=live.eta.strftime("%d.%m.%Y")))
         return {"headline": headline, "lines": lines}
-    if fill.reason == "price_above_limit":
+    if fill.reason == "price_above_limit" and live.hold:
+        suggest = round(fill.price * 1.02, -3)
+        lines.append(
+            t["above_hold"].format(price=m(fill.price), limit=m(intent.limit), suggest=m(suggest))
+        )
+    elif fill.reason == "price_above_limit":
         suggest = round(fill.price * 1.02, -3)
         lines.append(
             t["above"].format(
@@ -132,3 +161,60 @@ def explain(
 def product_name(product: str, lang: str) -> str:
     p = PRODUCTS[product]
     return p.uz if lang == "uz" else p.ru
+
+
+def explain_hold(live: LiveIntent, record: RoundRecord, lang: str) -> dict:
+    t = TEXT[lang]
+    m = lambda v: money(v, lang)  # noqa: E731
+    fill = live.fill
+    intent = live.intent
+    offers = {o.id: o for o in record.offers}
+    main = max(fill.allocations, key=lambda a: a.tonnes)
+    offer = offers[main.offer_id]
+    rent = record.result.seller_rents.get(offer.id, 0.0)
+    source = f"{offer.seller} ({region_name(offer.region, lang)})"
+    lines = []
+    if rent < 1:
+        lines.append(t["plain_hold"].format(seller=source, ask=m(offer.ask)))
+    else:
+        lines.append(
+            t["scarce_hold"].format(seller=source, ask=m(offer.ask), plant=m(main.plant_price))
+        )
+    saved = (intent.limit - fill.price) * fill.filled
+    if saved >= 1:
+        lines.append(t["saved"].format(limit=m(intent.limit), saved=m(saved)))
+    if fill.reason == "partial":
+        lines.append(t["rest"].format(rest=tonnes(round(intent.quantity - fill.filled, 3))))
+    lines.append(t["money"].format(cost=m(live.cost), fees=m(live.fees), refund=m(live.refund)))
+    lines.append(t["receipt"])
+    return {
+        "headline": t["held"].format(t=tonnes(fill.filled), price=m(fill.price)),
+        "lines": lines,
+    }
+
+
+def explain_sell(order, lang: str = "uz", next_round: int = 1) -> dict:
+    t = TEXT[lang]
+    m = lambda v: money(v, lang)  # noqa: E731
+    if order.status == "waiting":
+        return {
+            "headline": t["sell_waiting"].format(
+                t=tonnes(order.tonnes), min=m(order.min_price), round=next_round
+            ),
+            "lines": [t["sell_note"]],
+        }
+    if order.status == "cancelled":
+        return {"headline": t["sell_cancelled"], "lines": []}
+    if order.status == "unsold":
+        return {"headline": t["sell_unsold"].format(min=m(order.min_price)), "lines": []}
+    key = "sell_sold" if order.status == "sold" else "sell_partial"
+    net = order.proceeds - order.fees
+    headline = t[key].format(
+        t=tonnes(order.sold),
+        q=tonnes(order.tonnes),
+        price=m(order.price),
+        net=m(net),
+        fees=m(order.fees),
+    )
+    lines = [t["sell_note"]] if order.price and order.price > order.min_price + 1 else []
+    return {"headline": headline, "lines": lines}
