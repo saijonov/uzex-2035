@@ -1,39 +1,37 @@
-# Bozor — UZEX 2035
+# UzCom — UZEX 2035
 
 Demo for the UZEX AI Hackathon 2026 final task "The Exchange of 2035 — Reinvent UZEX".
 
 A phone app where anyone buys exchange goods like in a normal online shop: no broker, no terminal. It runs as a Telegram
-Mini App inside the team bot and as an iPhone app (Expo).
+Mini App inside the team bot and as an iPhone app (Expo). The screens are in Russian.
 
-The app opens with two buttons: **Xaridorman** (buyer) and **Sotuvchiman** (seller).
+| Screen | What it shows |
+|---|---|
+| Рынок | Search, the order on its way, popular goods with the price per tonne and the change |
+| Цемент М400 | Exchange price chart (3 months, 6 months, 1 year), price delivered to the door, tonnes, buy |
+| Купить, когда подешевеет | Target price, tonnes and how long to wait; the app buys by itself |
+| Подтверждение | Where and when, shared truck, every fee, Click / Payme / company account, confirm with MyID |
+| Заказ принят | Money frozen on the exchange and the four next steps |
+| Мои заказы | The current order with progress, and the price the app is waiting for |
+| В пути | Map of the route, the driver, money held on the exchange |
+| Заказ № 21-0412 | Deal, delivery, money and documents |
+| Груз приехал | Checklist before accepting, close the order, rate the seller |
 
-Buyer:
-
-- **Bozor.** Search, categories, price trend for each good, sellers with the price delivered to your city, buy.
-- **Birga olish.** Join a truck other buyers in your region are already filling and pay only your share of delivery.
-- **AI yordamchi.** Write "Samarqandga 10 tonna shakar kerak". If no seller has 10 t, the app gathers it from several
-  sellers, cheapest delivered first, and shows one card to confirm.
-- **Xaridlarim.** Each purchase on a map: trucks moving along real roads from every seller to you. The money stays
-  blocked on the exchange until you press "Yukni qabul qildim".
-
-Seller:
-
-- **Talab.** What buyers ask for and the market lacks: good, tonnes, region, the most they pay, and what is left for the
-  seller after delivery. One tap to make an offer.
-- **AI yordamchi.** Write "50 t sement, 950 ming". The app compares the price with the market and shows the nearest demand.
-- **Sotuvlarim.** Deals with "Xaridor puli bloklangan ✓", the route on a map, and the payout after fees.
-
-This is a demo, not a working product. Prices and sellers come from the hackathon registry (fictional data).
+This is a demo, not a working product: the numbers are fixed demo values.
 
 ## Run
 
 ```bash
 uv sync
-uv run uvicorn bozor.app:app --app-dir src --port 8035
+uv run uvicorn uzcom.app:app --app-dir src --port 8035
 ```
 
-Open http://localhost:8035/ on a phone-sized window. Without `OPENAI_API_KEY` in `.env` the chat still works with
-simple rules.
+Open http://localhost:8035/ in a phone-sized window. Add a screen name to open it directly, for example
+http://localhost:8035/#Y4Track.
+
+```bash
+uv run pytest
+```
 
 ## More
 

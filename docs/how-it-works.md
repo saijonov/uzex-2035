@@ -1,83 +1,42 @@
-# How Bozor works
+# How UzCom works
 
-## Data
+## Code
 
-`scripts/build_market.py` reads the hackathon registry (`registry.duckdb`, marked fictional by the organizers) and writes
-`data/market.json`:
+The app is three static files served by a small FastAPI server (`src/uzcom/app.py`).
 
-- 12 goods anyone may buy: cement, rebar, gypsum, lime, flour, sugar, rice, cottonseed oil, sunflower oil, salt, feed,
-  polyethylene.
-- Price history: weekly median price per tonne, 52 weeks up to 30 October 2026 (`amount_uzs / mass_t`).
-- Sellers: up to 6 per good with at least 20 deals in 2026. For each seller:
-  - price: median price per tonne since 1 August 2026;
-  - deals: number of deals in 2026;
-  - on time: share of 2026 deals delivered on or before the due date;
-  - since: year of the seller's first deal;
-  - grade and packaging: the most common product name and packaging, translated to Uzbek.
-- Stock on sale is made up from the seller's typical deal size. Sugar is set to 5, 3, 3 and 2 t so that a 10 t order
-  needs several sellers.
+- `web/index.html` holds every screen as a `<template>`, named like `Y1Home` or `N1Checkout`. The markup and styles are
+  the team's design, unchanged.
+- `web/app.js` has the logic of the five screens that react to taps: the chart and tonnes on the product page, the
+  shared truck and payment on checkout, the target price for auto-buy, and the checklist and rating on arrival. Each one
+  returns the values the template shows.
+- A small renderer fills `{{value}}`, repeats `sc-for` blocks, shows `sc-if` blocks and wires `onClick` and `onChange`.
+  After a tap it patches the page in place, so dragging a slider is never interrupted.
+- A link to `#Name` opens that screen.
 
-## Roads
+## Fitting the phone
 
-`scripts/build_routes.py` asks the public OSRM router (OpenStreetMap roads) for the driving route between the 14
-regional centres. Routes between the Fergana valley and the rest pass the Kamchik pass. Routes to Surxondaryo pass
-G'uzor. Without those waypoints the router picked roads through Tajikistan. The script flags any route that passes
-within 15 km of a city abroad; none do now.
+The design is 390 × 844. The app scales it to the screen width. When the window is shorter (Telegram shows its own
+header), the screen shrinks just enough that the content and the bottom buttons do not overlap. The map screen keeps
+its full height, and its drawing continues past the design's right edge so it fills wider shapes too.
 
-## Price you pay
+## Telegram
 
-For each seller:
+The Mini App opens full height with a white header. Telegram's back button appears on screens that have a back arrow
+and does the same thing. Taps give a light vibration.
 
-- delivery per tonne = road km × 450 so'm (a rough rate; no public per-km truck tariff was found);
-- delivered price = seller price + delivery;
-- days = 1 + km ÷ 450 (one day to load, 450 km a day).
+## Numbers
 
-Exchange fees on the goods value: 0.13% buyer fee and 0.05% clearing, the UZEX tariff from 1 October 2026.
+All numbers are demo values and agree with each other:
 
-## Gathering one order from several sellers
+- cement M400 from the seller: 907 700 so'm a tonne;
+- delivery in a shared truck: 18 000 so'm a tonne, 36 000 in an own truck, so 10 t is 180 000 cheaper shared;
+- exchange fee 0.13% and clearing 0.05% of the goods value;
+- price at the door: 907 700 + 18 000 + fees = 927 334 so'm a tonne; 10 t comes to 9 273 338 so'm;
+- the 40 t order on the map: 37 093 354 so'm held on the exchange, two 20 t trucks;
+- the chart has 52 weekly prices up to 26 October 2026, drawn from fixed key prices.
 
-Sellers are sorted by delivered price. The order takes as much as each one has, cheapest first, until the amount is
-reached. Delivery cost is per tonne, so this order is the cheapest possible.
+## Money
 
-- Not enough on the market: the buyer gets what exists, or nothing if "all or nothing" is on.
-- One truck carries up to 20 t.
-
-## AI
-
-The chat makes one OpenAI call per message with a strict function schema: good, tonnes, region, all-or-nothing, a
-restricted good, or an unknown good. The model only fills fields. Prices, sellers and totals come from the code above.
-Rules read the same message as a fallback (bags of 50 kg, "mln", region names in Uzbek and Russian). Limits: 1,500 calls
-a day in total and 40 per user.
-
-Goods UZEX sells only to certain buyers (cotton, wheat, AI-80 petrol, alcohol, oil, gold and silver) are refused with
-the reason.
-
-## Purchases
-
-Purchases are kept in the phone's browser storage. In the demo a day of driving takes 2 minutes. A truck's position is
-the point along the road route at that share of the trip. In a real app it would come from the carrier's GPS.
-
-Payment states: blocked on the exchange → loaded → arrived → buyer confirms → paid to sellers and carriers.
-
-## Shared trucks (Birga olish)
-
-A truck carries 20 t and costs road km × 9,000 so'm for the trip (450 so'm per tonne-km × 20 t).
-
-- Shared: each buyer pays tonnes × km × 450, the share of a full truck. All prices in the app use this.
-- Own truck: the whole trip, shown next to it so the saving is visible.
-- Each product page shows a truck to your region that other buyers are filling (demo numbers: 6–15 t taken by 2–5
-  buyers) and a button to join with the room that is left.
-
-## Seller side
-
-- **Requests.** For every good, the two regions where the cheapest delivered price is highest (furthest from sellers)
-  get a buyer request. Tonnes and buyer count are demo numbers. The most a buyer pays is that delivered price plus
-  1–5%. When a buyer presses "Kutaman" in the chat, the missing tonnes appear at the top of the seller list as "Yangi".
-- **What is left for the seller:** the buyer's maximum minus delivery from the seller's warehouse.
-- **Offer.** The seller sets tonnes and a warehouse price. Fees: 0.05% exchange and 0.05% clearing, the seller rates
-  from 1 October 2026. If the price plus delivery is above the buyer's maximum, the offer cannot be sent.
-- **Deal.** In the demo the buyer accepts at once. The buyer's money is shown as blocked on the exchange, the seller
-  presses "Yukni jo'natdim", the truck moves on the map, and a few seconds after it arrives the buyer accepts and the
-  payout lands.
-- **Listing with AI.** The chat reads good, tonnes, warehouse region and price, then compares the price with the weekly
-  market median (within 5% counts as in line) and names the nearest request for that good.
+The buyer's money is frozen on the exchange when the order is confirmed. The seller is paid only after the buyer checks
+the cargo and closes the order. If something is wrong, the money stays on the exchange and an inspector checks the
+cargo.
