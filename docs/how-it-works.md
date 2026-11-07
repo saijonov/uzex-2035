@@ -81,3 +81,22 @@ weekdays to days, "mln" and "ming", region aliases).
 - Delivery cost and time are rough formulas, not real logistics quotes.
 - Partial fills are allowed; all-or-nothing orders would need integer programming.
 - Signing with E-IMZO and real payments are shown as buttons.
+
+## Trading real goods
+
+The app lets an ordinary person trade, but every position is real goods.
+
+- **Buy and keep.** An order with no delivery region buys at the plant price (no delivery cost). Each plant the order
+  was filled from becomes a warehouse receipt in the portfolio: product, plant, tonnes, price paid.
+- **Value.** A receipt is valued at the lowest plant price in its region from the last round. Profit or loss is that
+  value minus what was paid.
+- **Sell.** A sell order puts the receipt's tonnes into the next round as an offer at the seller's minimum price.
+  The seller gets the round's plant price, which can be higher than the minimum. Fees: 0.05% exchange + 0.05% clearing.
+- **Deliver.** A receipt can be sent to any region. The delivery cost is charged by distance.
+- **Price index.** Each round records a price per product: the tonnage-weighted plant price of what traded, or the
+  average plant price if nothing traded. The charts show this index.
+- **Alerts.** A person can ask to be told when the index falls below or rises above a price.
+- **Warm-up.** On start the server runs `WARMUP_ROUNDS` simulated rounds so the charts have history.
+
+There is no borrowing and no short selling. The guardian adds a warning when one order uses more than half of the free
+money.

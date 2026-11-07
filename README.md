@@ -2,9 +2,9 @@
 
 Prototype for the UZEX AI Hackathon 2026 final task "The Exchange of 2035 — Reinvent UZEX".
 
-A person says what they need in plain words ("Qarshiga juma kunigacha 60 qop M400 sement kerak"). The exchange turns
-it into a confirmed intent, holds the money, clears all intents and offers together once per round with one delivered
-price per region, pools small orders into shared trucks, and explains the result in Uzbek or Russian.
+A phone app where an ordinary person trades real goods on the exchange without a broker. Every position is real cement
+in a plant warehouse, fully paid, no borrowed money. You can buy and keep it, sell it in a later round, or have it
+delivered. An AI assistant takes plain requests in Uzbek or Russian.
 
 AI reads people. An open algorithm sets prices. Rules protect the buyer.
 
@@ -15,14 +15,14 @@ uv sync
 uv run uvicorn niyat.app:app --app-dir src --port 8035
 ```
 
-- Buyer screen: http://localhost:8035/
-- Market screen for the projector: http://localhost:8035/market (`?lang=ru` for Russian)
+- Phone app: http://localhost:8035/ (tabs: Bozor, Yordamchi, Portfel; `?lang=ru` for Russian)
+- Market screen for the projector: http://localhost:8035/market
 
-Put `OPENAI_API_KEY` and `OPENAI_MODEL` in `.env` (see `.env.example`). Without a key the buyer screen still works with
-the rule-based parser, so the demo never depends on the network.
+Settings in `.env` (see `.env.example`):
 
-Set `ROUND_SECONDS=60` in `.env` to clear a round automatically every minute. By default rounds run from the button on
-the market screen.
+- `OPENAI_API_KEY`, `OPENAI_MODEL` for the assistant. Without a key the rule-based parser is used.
+- `ROUND_SECONDS=30` clears a round every 30 seconds so prices move on their own. `0` means rounds run from the button.
+- `WARMUP_ROUNDS=24` runs that many simulated rounds at start so the price charts have history.
 
 ## Tests
 
@@ -37,13 +37,14 @@ uv run ruff check src tests
 |---|---|
 | `src/niyat/clearing.py` | One round: linear program for the best matches, lowest clearing prices, zone prices, pooled trucks |
 | `src/niyat/market.py` | Simulated sellers and background buyers for each round, built from the seed file |
-| `src/niyat/exchange.py` | Accounts, held money, rounds, settlement, delivery confirmation |
+| `src/niyat/exchange.py` | Accounts, held money, rounds, warehouse receipts, selling, delivery, price index, alerts |
 | `src/niyat/explain.py` | Plain explanation of each result in Uzbek and Russian |
-| `src/niyat/ai_intake.py` | Reads a buyer message with one strict tool call |
+| `src/niyat/ai_intake.py` | Reads a message with one strict tool call |
 | `src/niyat/rules_parser.py` | Rule-based reader used when the AI is off or fails |
 | `src/niyat/intake.py` | Dialogue: one question at a time, then the confirmation card |
-| `src/niyat/guardian.py` | Checks before sending: restricted goods, odd limits, deadlines, money |
+| `src/niyat/guardian.py` | Checks before an order: restricted goods, odd limits, deadlines, money, too much in one order |
 | `src/niyat/app.py` | Web API and pages |
+| `src/niyat/web/` | Phone app (`index.html`, `trade.js`, `buyer.js`) and the projector screen (`market.html`) |
 | `data/cement_market.json` | Seed built by `scripts/build_seed.py` from the fictional hackathon registry |
 
 More in [docs/how-it-works.md](docs/how-it-works.md) and [docs/demo.md](docs/demo.md).
@@ -51,4 +52,4 @@ More in [docs/how-it-works.md](docs/how-it-works.md) and [docs/demo.md](docs/dem
 ## Data
 
 All market data is simulated from the fictional registry given in the qualifying round. Prices, sellers and buyers are
-not real. Fees use the real UZEX tariff rates for a buyer (0.13% exchange fee and 0.05% clearing).
+not real. Fees use the real UZEX tariff rates: buyer 0.13% exchange fee, seller 0.05%, clearing 0.05% each side.

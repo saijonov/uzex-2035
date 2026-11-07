@@ -1,33 +1,35 @@
 # Demo plan (3 minutes)
 
-Open two windows: the buyer screen on the left (phone width) and the market screen on the right.
+Two windows: the phone app on the left, the projector market screen on the right. Set `ROUND_SECONDS=30` so prices
+move during the pitch, or press the round button by hand.
 
 ## Before going on stage
 
-1. Start the server and open both screens.
-2. Press the round button once so the market screen already has prices.
-3. Check the buyer screen shows the greeting and examples.
+1. Start the server. Warm-up rounds give the charts history.
+2. Open both screens. Check the Bozor tab shows two goods with charts.
+3. Have one earlier purchase in the portfolio, so selling can be shown without waiting.
 
 ## Script
 
 | Time | What to show |
 |---|---|
-| 0:00–0:30 | Today: a real UZEX cement contract card, a lot, deposit, broker, order book, one hour to sign. A simple builder cannot do this. |
-| 0:30–1:30 | Type or say: "Qarshida uy quryapman, juma kunigacha 60 qop 400-markali sement kerak". The AI asks only the price limit and shows the current price. Answer "1 mln 100 ming dan oshmasin". Show the card and confirm. |
-| 1:30–2:00 | Press the round button on the market screen. Show one price per region, the Kashkadarya chart, and the pooled trucks. |
-| 2:00–2:30 | Back on the buyer screen: price, why it came out that way, money saved against the limit, shared truck, delivery date. Press "Yetib keldi". |
-| 2:30–3:00 | Why it is safe: AI never sets the price, sealed rounds, money released only on delivery, guardian blocks restricted goods (show "AI-80 benzin" example). 2035: the same intent layer for spot, Agro Uzex and Xarid. |
+| 0:00–0:25 | Today: to buy cement on UZEX you need a company, a broker, a contract number, a deposit and one hour to sign. An ordinary person is locked out. |
+| 0:25–1:05 | Bozor tab: cement price moving round by round, like a trading app. Open M400: chart, prices by plant. Press Sotib olish: 5 t, max price, "Zavod omborida". The guardian says prices can go down too. Confirm. |
+| 1:05–1:30 | Market screen: the round clears. One price for everyone, small orders pooled. |
+| 1:30–2:05 | Portfel tab: 5 t of real cement at a named plant, current value, profit or loss, and why the price came out that way. Sell 2 t: you get the round price, not your minimum. |
+| 2:05–2:30 | Yordamchi tab: "Qarshiga juma kunigacha 60 qop M400 sement kerak". The AI asks only the price, then a card. Show the "AI-80 benzin" example being refused. |
+| 2:30–3:00 | Why it is safe: real goods only, no borrowed money, sealed rounds, AI never sets the price, money released on delivery. 2035: the same app for cement, flour, sugar, metal, and farmers selling harvests. |
 
 ## Likely jury questions
 
-- **Brokers are required by law today.** In 2035 the role changes: brokers become pool organisers and advisers for
-  companies that want them. A simple buyer does not need one.
-- **Where do sellers come from?** Plants post how much they can sell this round and their minimum price at the plant.
-  The same model works the other way for farmers selling small harvests.
-- **What if the AI misunderstands?** It only fills fields. The buyer confirms a plain card before any money moves.
-  Without the AI, the rule parser still works.
-- **Can someone manipulate the price?** Orders are sealed until the round clears, everyone in a region pays one price,
-  and the calculation is published. Surveillance of seller behaviour is the next step.
-- **Why rounds and not a live order book?** Fairness for slow and small participants. Budish, Cramton and Shim (QJE 2015)
-  show batch auctions remove the speed race. Europe's power market already clears this way.
-- **Is the data real?** No. The market is simulated from the fictional registry; tariffs are the real UZEX buyer rates.
+- **Isn't this just Forex?** No. Forex apps sell bets with borrowed money. Here every position is real goods in a
+  warehouse, fully paid. You cannot lose more than you put in, and the goods can be delivered.
+- **Why no brokers?** The app does what the broker did: checks, orders, money, documents. Brokers can stay as advisers
+  for companies that want them.
+- **Isn't it risky for ordinary people?** Prices can fall, and the app says so before every purchase. There is no
+  leverage, a warning when one order is more than half your free money, and restricted goods are refused.
+- **Where do the prices come from?** A sealed round: all buyers and sellers together, the best matches for everyone,
+  and the lowest price that clears the market. The same idea runs Europe's day-ahead power market.
+- **What if the AI misunderstands?** It only fills fields. You confirm a plain card before money moves. Without the AI,
+  the rule parser still works.
+- **Is the data real?** No. It is simulated from the fictional registry; tariffs are the real UZEX rates.
