@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Niyat · UZEX 2035</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand"><b>Niyat</b><span>UZEX 2035</span></div>
+      <div class="lang"><button data-lang="uz">UZ</button><button data-lang="ru">RU</button></div>
+    </header>
+    <div class="wallet"><span id="wallet-label"></span><b id="wallet"></b></div>
+    <main class="thread" id="thread"></main>
+    <form class="composer" id="composer">
+      <button type="button" class="mic" id="mic" title="Mic" hidden>🎤</button>
+      <textarea id="input" rows="1" autocomplete="off"></textarea>
+      <button class="primary" type="submit" id="send"></button>
+    </form>
+  </div>
+  <script src="/static/buyer.js"></script>
+</body>
+</html>
