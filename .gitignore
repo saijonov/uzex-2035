@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+var/
+*.log
+*.duckdb
+*.sqlite3
+server/
+.DS_Store
