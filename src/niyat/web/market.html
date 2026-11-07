@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Niyat birjasi · UZEX 2035</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/market.css">
+</head>
+<body>
+  <div class="board">
+    <header class="bar">
+      <div class="brand"><b>Niyat birjasi</b><span>UZEX 2035</span></div>
+      <div class="round" id="round"></div>
+      <div class="controls">
+        <span class="countdown" id="countdown"></span>
+        <button class="primary" id="clear"></button>
+        <div class="lang"><button data-lang="uz">UZ</button><button data-lang="ru">RU</button></div>
+      </div>
+    </header>
+    <section class="tiles" id="tiles"></section>
+    <section class="grid">
+      <div class="panel">
+        <div class="panel-head">
+          <h2 id="zones-title"></h2>
+          <div class="seg" id="products"></div>
+        </div>
+        <table class="zones" id="zones"></table>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <h2 id="chart-title"></h2>
+            <p class="sub" id="chart-sub"></p>
+          </div>
+          <div class="legend" id="legend"></div>
+        </div>
+        <div class="chart" id="chart"></div>
+        <details class="table-view"><summary id="table-label"></summary><div id="chart-table"></div></details>
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2 id="ship-title"></h2></div>
+      <div class="ships" id="ships"></div>
+    </section>
+    <footer class="foot" id="foot"></footer>
+  </div>
+  <div class="tip" id="tip" hidden></div>
+  <script src="/static/market.js"></script>
+</body>
+</html>
