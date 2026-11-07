@@ -23,6 +23,7 @@ class Draft:
     whole: bool = False
     restricted: str | None = None
     other: str | None = None
+    price: int | None = None
 
 
 def word_match(text: str, words: tuple[str, ...]) -> bool:
@@ -49,6 +50,15 @@ def rules(message: str, asked: str | None) -> dict:
         found["tonnes"] = math.ceil(float(m.group(1).replace(",", ".")))
     elif asked == "tonnes" and (m := re.fullmatch(r"\s*" + number + r"\s*", text)):
         found["tonnes"] = math.ceil(float(m.group(1).replace(",", ".")))
+    joined = re.sub(r"(?<=\d)[ \u00a0](?=\d{3}\b)", "", text)
+    if m := re.search(number + r"\s*(?:mln|million|млн)", joined):
+        found["price"] = round(float(m.group(1).replace(",", ".")) * 1_000_000)
+    elif m := re.search(number + r"\s*(?:ming|минг|тыс)", joined):
+        found["price"] = round(float(m.group(1).replace(",", ".")) * 1000)
+    elif m := re.search(r"(?<![\d.,])(\d{5,})(?![\d.,])", joined):
+        found["price"] = int(m.group(1))
+    elif asked == "price" and (m := re.fullmatch(r"\s*(\d+)\s*", joined)):
+        found["price"] = int(m.group(1)) * (1000 if int(m.group(1)) < 10_000 else 1)
     if region := find_region(text):
         found["region"] = region
     if re.search(WHOLE_YES, text):
@@ -61,12 +71,12 @@ def rules(message: str, asked: str | None) -> dict:
 TOOL = {
     "type": "function",
     "name": "update_order",
-    "description": "Fields of a commodity purchase request read from the user's message. Null when the message does not say it.",
+    "description": "Fields of a commodity buy or sell request read from the user's message. Null when the message does not say it.",
     "strict": True,
     "parameters": {
         "type": "object",
         "additionalProperties": False,
-        "required": ["good", "restricted", "other", "tonnes", "region", "whole"],
+        "required": ["good", "restricted", "other", "tonnes", "region", "whole", "price"],
         "properties": {
             "good": {
                 "type": ["string", "null"],
@@ -90,19 +100,25 @@ TOOL = {
             "region": {
                 "type": ["string", "null"],
                 "enum": [*REGIONS, None],
-                "description": "Delivery region. "
+                "description": "Delivery region for a buyer, warehouse region for a seller. "
                 + "; ".join(f"{r.id}={r.name}, {r.city}" for r in REGIONS.values()),
             },
             "whole": {
                 "type": ["boolean", "null"],
                 "description": "True if the user wants all of it at once or nothing; false if a partial amount is fine.",
             },
+            "price": {
+                "type": ["number", "null"],
+                "description": "Price per tonne in so'm if stated. '950 ming' is 950000, '1,2 mln' is 1200000.",
+            },
         },
     },
 }
 
 
-def ai(message: str, draft: Draft, asked: str | None, settings: Settings) -> dict:
+def ai(
+    message: str, draft: Draft, asked: str | None, settings: Settings, role: str = "buyer"
+) -> dict:
     client = OpenAI(
         api_key=settings.openai_api_key.get_secret_value(), timeout=settings.ai_timeout_seconds
     )
@@ -110,7 +126,7 @@ def ai(message: str, draft: Draft, asked: str | None, settings: Settings) -> dic
         model=settings.openai_model,
         reasoning={"effort": settings.openai_reasoning_effort},
         instructions=(
-            "Read a buyer's message in Uzbek or Russian for a commodity marketplace and call update_order. "
+            f"Read a {role}'s message in Uzbek or Russian for a commodity marketplace and call update_order. "
             f"Current order: {json.dumps(asdict(draft))}. Last question asked: {asked or 'none'}. "
             "A bare number answers the last question."
         ),
@@ -123,6 +139,8 @@ def ai(message: str, draft: Draft, asked: str | None, settings: Settings) -> dic
     fields = json.loads(call.arguments)
     if fields["tonnes"] is not None:
         fields["tonnes"] = max(1, math.ceil(fields["tonnes"]))
+    if fields["price"] is not None:
+        fields["price"] = round(fields["price"])
     return {k: v for k, v in fields.items() if v is not None}
 
 
@@ -161,3 +179,44 @@ def reply(draft: Draft, market: Market) -> tuple[str, str | None, dict | None]:
     else:
         text = f"Bitta sotuvchida {draft.tonnes} t yo‘q. {sellers} ta sotuvchidan yig‘dim — yetkazish bilan eng arzon yo‘l."
     return text + f" Jami: {money(plan['total'])}.", None, plan
+
+
+def percent(value: float) -> str:
+    return f"{value * 100:+.1f}%".replace(".", ",").replace("-", "−")
+
+
+def listing_reply(draft: Draft, market: Market) -> tuple[str, str | None, dict | None]:
+    if draft.restricted:
+        r = next(r for r in RESTRICTED if r.id == draft.restricted)
+        return f"{r.name} bu ilovada sotilmaydi: birjada u {r.who} sotiladi.", None, None
+    if not draft.good:
+        return "Nima sotasiz? Masalan: «50 t sement, 950 ming».", "good", None
+    name, index = GOODS[draft.good].name, market.index(draft.good)
+    if not draft.tonnes:
+        return f"{name} — necha tonna sotasiz?", "tonnes", None
+    if not draft.price:
+        return f"1 tonnasini necha so‘mdan sotasiz? Bozorda o‘rtacha {money(index)}.", "price", None
+    diff = round(draft.price / index - 1, 3)
+    near = next((r for r in market.requests(draft.region) if r["good"] == draft.good), None)
+    advice = (
+        "Narx bozorga mos."
+        if abs(diff) <= 0.05
+        else "Bozordan qimmat, sotilishi sekin bo‘lishi mumkin."
+        if diff > 0
+        else "Bozordan ancha arzon, narxni ko‘tarsangiz ham sotiladi."
+    )
+    text = f"Bozor o‘rtachasi {money(index)}, sizniki {percent(diff)}. {advice}"
+    if near:
+        text += f" Eng yaqin talab: {near['city']}, {near['tonnes']} t."
+    listing = {
+        "good": draft.good,
+        "good_name": name,
+        "tonnes": draft.tonnes,
+        "price": draft.price,
+        "region": draft.region,
+        "city": REGIONS[draft.region].city,
+        "index": index,
+        "diff": diff,
+        "request": near,
+    }
+    return text, None, listing
