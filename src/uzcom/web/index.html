@@ -1,24 +1,586 @@
 <!doctype html>
-<html lang="uz">
+<html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-  <meta name="color-scheme" content="light dark">
-  <title>Bozor</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-  <link rel="stylesheet" href="/app.css">
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
-  <script src="/app.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>UzCom</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="/app.css">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="/app.js" defer></script>
 </head>
 <body>
-  <main id="screen"></main>
-  <button id="ai" class="fab" data-act="chat" aria-label="AI yordamchi"></button>
-  <nav class="tabs">
-    <button data-act="tab" data-id="market"></button>
-    <button data-act="tab" data-id="orders"></button>
-  </nav>
-  <div id="layer"></div>
-  <div id="toast" role="status"></div>
+<main id="screen"></main>
+<template id="Y1Home">
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: #FFFFFF; font-family: 'Onest', sans-serif; color: #111111; padding: 24px 20px 0">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<button style="height: 38px; padding: 0 14px 0 10px; border-radius: 999px; border: none; background: #F4F4F1; display: flex; align-items: center; gap: 6px; font-family: 'Onest', sans-serif; font-size: 14px; font-weight: 600; color: #111111; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
+В Ташкент
+</button>
+<div style="width: 40px; height: 40px; border-radius: 50%; background: #111111; color: #FFDD2D; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px">A</div>
+</div>
+<h1 style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: 0">Рынок</h1>
+<div style="margin-top: 18px; height: 60px; border-radius: 20px; background: #F4F4F1; display: flex; align-items: center; gap: 10px; padding: 0 8px 0 18px">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+<label for="q3" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Что купить</label>
+<input id="q3" placeholder="Что купить? Цемент, мука…" style="flex: 1; min-width: 0; height: 44px; border: none; outline: none; background: transparent; font-family: 'Onest', sans-serif; font-size: 17px; color: #111111">
+<button aria-label="Сказать голосом" style="width: 44px; height: 44px; border-radius: 14px; border: none; background: #FFDD2D; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path><line x1="12" y1="18" x2="12" y2="22"></line></svg>
+</button>
+</div>
+<a href="#Y4Track" style="margin-top: 16px; height: 84px; box-sizing: border-box; border-radius: 26px; background: #FFDD2D; display: flex; align-items: center; gap: 14px; padding: 0 18px 0 14px">
+<img src="/img/truck.png" alt="" style="width: 88px; height: 58px; object-fit: contain; flex-shrink: 0; margin-left: -2px; filter: drop-shadow(0 6px 8px rgba(17,17,17,0.22))">
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 17px; font-weight: 800">Ваш цемент в пути</div>
+<div style="font-size: 14px; font-weight: 500; color: #3D3A2A">Приедет завтра в 14:00</div>
+</div>
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+</a>
+<div style="margin-top: 20px; display: flex; gap: 8px">
+<button style="height: 40px; padding: 0 16px; border-radius: 999px; border: none; background: #111111; color: #FFFFFF; font-family: 'Onest', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer">Все</button>
+<button style="height: 40px; padding: 0 16px; border-radius: 999px; border: none; background: #F4F4F1; color: #111111; font-family: 'Onest', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer">Стройка</button>
+<button style="height: 40px; padding: 0 16px; border-radius: 999px; border: none; background: #F4F4F1; color: #111111; font-family: 'Onest', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer">Продукты</button>
+</div>
+<div style="margin-top: 20px; display: flex; align-items: baseline; justify-content: space-between">
+<div style="font-size: 19px; font-weight: 800">Популярное</div>
+<div style="font-size: 13px; color: #6B6A63">цена за 1 тонну</div>
+</div>
+<div style="margin-top: 8px; display: flex; flex-direction: column">
+<a href="#Y2Product" style="height: 72px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #EFEFEA">
+<div style="width: 50px; height: 50px; border-radius: 16px; background: #FFF3B0; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><img src="/img/cement.png" alt="" style="width: 30px; height: 42px; object-fit: contain; filter: drop-shadow(0 3px 4px rgba(17,17,17,0.18))"></div>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 17px; font-weight: 700">Цемент</div>
+<div style="font-size: 13px; color: #6B6A63">6 продавцов</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
+<div style="font-size: 17px; font-weight: 800">966 000 сум</div>
+<div style="height: 22px; padding: 0 8px; border-radius: 999px; background: #111111; color: #FFFFFF; font-size: 12px; font-weight: 700; display: flex; align-items: center">−3,2%</div>
+</div>
+</a>
+<div style="height: 72px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #EFEFEA">
+<div style="width: 50px; height: 50px; border-radius: 16px; background: #F4F4F1; border: 2px dashed rgba(17,17,17,0.25); box-sizing: border-box; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; font-weight: 700; color: #6B6A63">3D</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 17px; font-weight: 700">Мука</div>
+<div style="font-size: 13px; color: #6B6A63">6 продавцов</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
+<div style="font-size: 17px; font-weight: 800">6 млн сум</div>
+<div style="height: 22px; padding: 0 8px; border-radius: 999px; background: #F4F4F1; color: #111111; font-size: 12px; font-weight: 700; display: flex; align-items: center">+1,5%</div>
+</div>
+</div>
+<div style="height: 72px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #EFEFEA">
+<div style="width: 50px; height: 50px; border-radius: 16px; background: #F4F4F1; border: 2px dashed rgba(17,17,17,0.25); box-sizing: border-box; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; font-weight: 700; color: #6B6A63">3D</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 17px; font-weight: 700">Сахар</div>
+<div style="font-size: 13px; color: #6B6A63">4 продавца</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
+<div style="font-size: 17px; font-weight: 800">15,8 млн сум</div>
+<div style="height: 22px; padding: 0 8px; border-radius: 999px; background: #F4F4F1; color: #111111; font-size: 12px; font-weight: 700; display: flex; align-items: center">+1,7%</div>
+</div>
+</div>
+<div style="height: 72px; display: flex; align-items: center; gap: 14px">
+<div style="width: 50px; height: 50px; border-radius: 16px; background: #F4F4F1; border: 2px dashed rgba(17,17,17,0.25); box-sizing: border-box; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; font-weight: 700; color: #6B6A63">3D</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 17px; font-weight: 700">Арматура</div>
+<div style="font-size: 13px; color: #6B6A63">6 продавцов</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
+<div style="font-size: 17px; font-weight: 800">12,2 млн сум</div>
+<div style="height: 22px; padding: 0 8px; border-radius: 999px; background: #F4F4F1; color: #111111; font-size: 12px; font-weight: 700; display: flex; align-items: center">+0,8%</div>
+</div>
+</div>
+</div>
+<nav aria-label="Главное меню" style="position: absolute; left: 16px; right: 16px; bottom: 20px; height: 68px; border-radius: 24px; background: #111111; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 0 6px; box-sizing: border-box; align-items: center">
+<a href="#Y1Home" style="height: 52px; margin: 0 4px; border-radius: 18px; background: #FFDD2D; display: flex; align-items: center; justify-content: center; gap: 6px; color: #111111; font-size: 14px; font-weight: 700">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>
+Рынок
+</a>
+<a href="#Y3Orders" aria-label="Заказы, 1 новый" style="position: relative; height: 52px; display: flex; align-items: center; justify-content: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"></path><path d="M3 8l9 5 9-5"></path><path d="M12 13v8"></path></svg>
+<div style="position: absolute; top: 8px; left: calc(50% + 6px); width: 10px; height: 10px; border-radius: 50%; background: #FFDD2D; border: 2px solid #111111"></div>
+</a>
+<a href="#Y1Home" aria-label="Продать" style="height: 52px; display: flex; align-items: center; justify-content: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>
+</a>
+</nav>
+</div>
+</template>
+<template id="Y2Product">
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: #FFFFFF; font-family: 'Onest', sans-serif; color: #111111; padding: 20px 20px 0">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<a href="#Y1Home" aria-label="Назад" style="width: 44px; height: 44px; border-radius: 14px; background: #F4F4F1; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+</a>
+<button aria-label="В избранное" style="width: 44px; height: 44px; border-radius: 14px; border: none; background: #F4F4F1; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+</button>
+</div>
+<div style="margin-top: 14px; display: flex; gap: 14px; align-items: center">
+<div style="width: 96px; height: 96px; border-radius: 26px; background: #FFF3B0; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><img src="/img/cement.png" alt="Мешок цемента" style="width: 60px; height: 82px; object-fit: contain; filter: drop-shadow(0 8px 10px rgba(17,17,17,0.18))"></div>
+<div style="flex: 1; min-width: 0">
+<h1 style="margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.5px">Цемент М400</h1>
+<div style="margin-top: 2px; font-size: 14px; color: #6B6A63">В мешках по 50 кг</div>
+<div style="margin-top: 8px; display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 999px; background: #F4F4F1; font-size: 12px; font-weight: 600">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+Продавец проверен биржей
+</div>
+</div>
+</div>
+<div style="margin-top: 16px; border-radius: 28px; border: 1px solid #EFEFEA; padding: 16px 16px 12px">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px">
+<div>
+<div style="font-size: 13px; color: #6B6A63">Цена на бирже за 1 тонну</div>
+<div style="margin-top: 2px; font-size: 28px; font-weight: 800; letter-spacing: -0.8px">{{selPrice}} <span style="font-size: 16px; font-weight: 600">сум</span></div>
+<div style="font-size: 13px; color: #6B6A63">{{selDate}}</div>
+</div>
+<div style="height: 26px; padding: 0 10px; border-radius: 999px; background: #111111; color: #FFFFFF; font-size: 12px; font-weight: 700; display: flex; align-items: center; flex-shrink: 0">{{change}}</div>
+</div>
+<div style="position: relative; margin-top: 10px; height: 140px">
+<svg width="316" height="140" viewBox="0 0 316 140" role="img" aria-label="График средней цены цемента на бирже" style="position: absolute; left: 0; top: 0">
+<defs><linearGradient id="ar2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFDD2D" stop-opacity="0.55"></stop><stop offset="1" stop-color="#FFDD2D" stop-opacity="0"></stop></linearGradient></defs>
+<line x1="0" y1="14" x2="316" y2="14" stroke="#F1F1EC" stroke-width="1"></line>
+<line x1="0" y1="70" x2="316" y2="70" stroke="#F1F1EC" stroke-width="1"></line>
+<line x1="0" y1="126" x2="316" y2="126" stroke="#F1F1EC" stroke-width="1"></line>
+<path d="{{area}}" fill="url(#ar2)"></path>
+<path d="{{line}}" fill="none" stroke="#111111" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<line x1="{{cx}}" y1="0" x2="{{cx}}" y2="140" stroke="#111111" stroke-width="1.2" stroke-dasharray="3 4"></line>
+<circle cx="{{cx}}" cy="{{cy}}" r="7" fill="#FFDD2D" stroke="#111111" stroke-width="3"></circle>
+</svg>
+<div style="position: absolute; right: 0; top: 0; font-size: 11px; color: #8A8980">{{maxLabel}}</div>
+<div style="position: absolute; right: 0; bottom: 0; font-size: 11px; color: #8A8980">{{minLabel}}</div>
+<div style="position: absolute; left: {{tipLeft}}px; top: {{tipTop}}px; width: 104px; padding: 6px 8px; box-sizing: border-box; border-radius: 12px; background: #111111; color: #FFFFFF; text-align: center; pointer-events: none">
+<div style="font-size: 11px; color: #CFCFC8">{{tipDate}}</div>
+<div style="font-size: 13px; font-weight: 700">{{selShort}}</div>
+</div>
+</div>
+<label for="slider2" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Выбрать дату на графике</label>
+<input id="slider2" class="pr" type="range" min="0" max="{{maxIdx}}" value="{{idx}}" onChange="{{onSlide}}" style="margin-top: 6px">
+<div style="margin-top: 8px; display: flex; gap: 6px">
+<sc-for list="{{ranges}}" as="r">
+<button onClick="{{r.pick}}" style="flex: 1; height: 34px; border-radius: 12px; border: none; background: {{r.bg}}; color: {{r.fg}}; font-family: 'Onest', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer">{{r.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="margin-top: 10px; border-radius: 22px; background: #FFDD2D; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px">
+<div>
+<div style="font-size: 13px; font-weight: 600; color: #3D3A2A">Ваша цена с доставкой до двери</div>
+<div style="margin-top: 2px; font-size: 20px; font-weight: 800">927 334 сум за тонну</div>
+</div>
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="6" width="14" height="10" rx="2"></rect><path d="M15 9h4l4 4v3h-8z"></path><circle cx="6" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg>
+</div>
+<div style="margin-top: 10px; height: 60px; box-sizing: border-box; border-radius: 22px; background: #F4F4F1; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 16px">
+<div style="font-size: 17px; font-weight: 700">Сколько тонн?</div>
+<div style="display: flex; align-items: center; gap: 4px">
+<button onClick="{{minus}}" aria-label="Меньше" style="width: 44px; height: 44px; border-radius: 14px; border: none; background: #FFFFFF; font-size: 24px; font-weight: 600; color: #111111; cursor: pointer">−</button>
+<div style="width: 50px; text-align: center; font-size: 21px; font-weight: 800">{{qty}}</div>
+<button onClick="{{plus}}" aria-label="Больше" style="width: 44px; height: 44px; border-radius: 14px; border: none; background: #FFFFFF; font-size: 24px; font-weight: 600; color: #111111; cursor: pointer">+</button>
+</div>
+</div>
+<div style="position: absolute; left: 20px; right: 20px; bottom: 24px; display: flex; gap: 10px">
+<a href="#N5AutoBuy" aria-label="Купить автоматически, когда подешевеет" style="width: 64px; height: 64px; border-radius: 22px; background: #F4F4F1; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+</a>
+<a href="#N1Checkout" style="flex: 1; height: 64px; border-radius: 22px; background: #111111; color: #FFFFFF; display: flex; align-items: center; justify-content: space-between; padding: 0 20px">
+<div style="font-size: 17px; font-weight: 800">Купить</div>
+<div style="font-size: 15px; font-weight: 700; color: #FFDD2D">{{total}} сум</div>
+</a>
+</div>
+</div>
+</template>
+<template id="N1Checkout">
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: #FFFFFF; font-family: 'Onest', sans-serif; color: #111111; padding: 20px 20px 0">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<a href="#Y2Product" aria-label="Назад" style="width: 44px; height: 44px; border-radius: 14px; background: #F4F4F1; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+</a>
+<h1 style="margin: 0; font-size: 17px; font-weight: 700">Подтверждение</h1>
+<div style="width: 44px"></div>
+</div>
+<div style="margin-top: 14px; display: flex; align-items: center; gap: 12px">
+<div style="width: 56px; height: 56px; border-radius: 18px; background: #FFF3B0; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><img src="/img/cement.png" alt="" style="width: 34px; height: 46px; object-fit: contain; filter: drop-shadow(0 3px 4px rgba(17,17,17,0.18))"></div>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 17px; font-weight: 800">Цемент М400, {{qty}} тонн</div>
+<div style="font-size: 13px; color: #6B6A63">Продавец Qabechuz Stroy, проверен биржей</div>
+</div>
+</div>
+<div style="margin-top: 14px; border-radius: 22px; background: #F4F4F1; padding: 4px 16px">
+<div style="height: 56px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #E8E8E2">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 12px; color: #6B6A63">Куда</div>
+<div style="font-size: 15px; font-weight: 600">Ташкент, склад пекарни на Нукус 12</div>
+</div>
+<div style="font-size: 13px; font-weight: 700">Изменить</div>
+</div>
+<div style="height: 56px; display: flex; align-items: center; gap: 12px">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h18"></path></svg>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 12px; color: #6B6A63">Когда</div>
+<div style="font-size: 15px; font-weight: 600">Завтра, 8 ноября, до 14:00</div>
+</div>
+<div style="font-size: 13px; font-weight: 700">Изменить</div>
+</div>
+</div>
+<button onClick="{{toggleShare}}" aria-pressed="{{shareAria}}" style="margin-top: 10px; width: 100%; border-radius: 22px; border: none; background: {{shareBg}}; padding: 12px 14px 12px 16px; display: flex; align-items: center; gap: 12px; text-align: left; font-family: 'Onest', sans-serif; color: #111111; cursor: pointer">
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 15px; font-weight: 700">Общая машина, дешевле на 180 000 сум</div>
+<div style="font-size: 12px; color: #3D3A2A; line-height: 1.35">Если за 2 дня не наберётся, отправим отдельно без доплаты</div>
+</div>
+<div style="width: 52px; height: 32px; border-radius: 16px; background: {{switchBg}}; position: relative; flex-shrink: 0">
+<div style="position: absolute; top: 4px; left: {{knob}}px; width: 24px; height: 24px; border-radius: 50%; background: {{knobBg}}"></div>
+</div>
+</button>
+<div style="margin-top: 12px; border-radius: 22px; border: 1px solid #EFEFEA; padding: 12px 16px">
+<div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 26px"><div style="color: #6B6A63">Товар</div><div>{{goods}} сум</div></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 26px"><div style="color: #6B6A63">Доставка до двери</div><div>{{delivery}} сум</div></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 26px"><div style="color: #6B6A63">Комиссия биржи 0,13%</div><div>{{fee1}} сум</div></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 26px"><div style="color: #6B6A63">Клиринг 0,05%</div><div>{{fee2}} сум</div></div>
+<div style="margin-top: 6px; padding-top: 8px; border-top: 1px solid #EFEFEA; display: flex; justify-content: space-between; align-items: baseline"><div style="font-size: 16px; font-weight: 700">Итого</div><div style="font-size: 20px; font-weight: 800">{{total}} сум</div></div>
+</div>
+<div style="margin-top: 12px; font-size: 13px; font-weight: 600; color: #6B6A63">Чем оплатить</div>
+<div style="margin-top: 6px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{pays}}" as="p">
+<button onClick="{{p.pick}}" aria-pressed="{{p.aria}}" style="height: 46px; border-radius: 14px; border: {{p.border}}; background: {{p.bg}}; color: #111111; font-family: 'Onest', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer">{{p.label}}</button>
+</sc-for>
+</div>
+<div style="position: absolute; left: 20px; right: 20px; bottom: 24px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; color: #6B6A63">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B6A63" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+Цена зафиксирована на 15 минут
+</div>
+<a href="#N2Success" style="height: 64px; border-radius: 22px; background: #111111; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 10px">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFDD2D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 11c0 3-1 6-3 8"></path><path d="M8 7.5A5 5 0 0 1 17 11c0 2-.3 4-1 6"></path><path d="M5 10a7 7 0 0 1 2-4.9"></path><path d="M12 11v2"></path></svg>
+<div style="font-size: 17px; font-weight: 800">Подтвердить через MyID</div>
+</a>
+</div>
+</div>
+</template>
+<template id="N2Success">
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: #FFFFFF; font-family: 'Onest', sans-serif; color: #111111; padding: 36px 20px 0">
+<div style="margin: 0 auto; width: 176px; height: 176px; border-radius: 50%; background: #FFDD2D; display: flex; align-items: center; justify-content: center">
+<div style="width: 128px; height: 128px; border-radius: 36px; border: 2px dashed rgba(17,17,17,0.45); box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 12px; font-weight: 700; line-height: 1.3; color: #3D3A2A">3D<br>коробка<br>с галочкой</div>
+</div>
+<h1 style="margin: 20px 0 0; text-align: center; font-size: 30px; font-weight: 800; letter-spacing: -0.8px">Заказ принят</h1>
+<div style="margin-top: 4px; text-align: center; font-size: 15px; color: #6B6A63">Цемент М400, 10 тонн. Заказ № 21-0458</div>
+<div style="margin-top: 18px; border-radius: 20px; background: #FFF6CC; padding: 14px 16px; display: flex; gap: 10px; align-items: flex-start">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+<div style="font-size: 14px; line-height: 1.4"><b>9 273 338 сум заморожены на бирже.</b> Продавец получит их, только когда вы примете груз.</div>
+</div>
+<h2 style="margin: 20px 0 0; font-size: 17px; font-weight: 800">Что будет дальше</h2>
+<div style="margin-top: 10px; position: relative">
+<div style="position: absolute; left: 15px; top: 24px; bottom: 24px; width: 2px; background: #EFEFEA"></div>
+<sc-for list="{{steps}}" as="s">
+<div style="position: relative; display: flex; gap: 14px; align-items: flex-start; padding: 6px 0">
+<div style="width: 32px; height: 32px; border-radius: 50%; background: {{s.bg}}; color: {{s.fg}}; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0">{{s.n}}</div>
+<div style="padding-top: 2px">
+<div style="font-size: 15px; font-weight: 700">{{s.title}}</div>
+<div style="font-size: 13px; color: #6B6A63">{{s.sub}}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="position: absolute; left: 20px; right: 20px; bottom: 24px; display: flex; flex-direction: column; gap: 10px">
+<a href="#Y3Orders" style="height: 60px; border-radius: 22px; background: #111111; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 800">Следить за заказом</a>
+<a href="#Y1Home" style="height: 52px; border-radius: 18px; background: #F4F4F1; color: #111111; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">На главную</a>
+</div>
+</div>
+</template>
+<template id="N5AutoBuy">
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: #FFFFFF; font-family: 'Onest', sans-serif; color: #111111; padding: 20px 20px 0">
+<div style="display: flex; align-items: center; gap: 12px">
+<a href="#Y2Product" aria-label="Назад" style="width: 44px; height: 44px; border-radius: 14px; background: #F4F4F1; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+</a>
+<h1 style="margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.3px">Купить, когда подешевеет</h1>
+</div>
+<div style="margin-top: 16px; display: flex; align-items: center; gap: 12px">
+<div style="width: 52px; height: 52px; border-radius: 16px; background: #FFF3B0; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><img src="/img/cement.png" alt="" style="width: 32px; height: 44px; object-fit: contain; filter: drop-shadow(0 3px 4px rgba(17,17,17,0.18))"></div>
+<div>
+<div style="font-size: 17px; font-weight: 700">Цемент М400</div>
+<div style="font-size: 13px; color: #6B6A63">Сейчас на бирже 965 900 сум за тонну</div>
+</div>
+</div>
+<div style="margin-top: 16px; border-radius: 28px; background: #FFDD2D; padding: 18px 18px 16px">
+<div style="font-size: 14px; font-weight: 600; color: #3D3A2A">Купить, если цена опустится до</div>
+<div style="margin-top: 4px; font-size: 36px; font-weight: 800; letter-spacing: -1px">{{target}} <span style="font-size: 18px; font-weight: 600">сум</span></div>
+<div style="font-size: 14px; font-weight: 600">Это на {{pct}} дешевле, чем сейчас</div>
+<label for="target5" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Желаемая цена</label>
+<input id="target5" class="ab" type="range" min="900000" max="960000" step="1000" value="{{targetNum}}" onChange="{{onTarget}}" style="margin-top: 14px">
+<div style="margin-top: 6px; display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #3D3A2A">
+<div>900 000</div>
+<div>Минимум за год 921 300</div>
+<div>960 000</div>
+</div>
+</div>
+<div style="margin-top: 12px; height: 60px; box-sizing: border-box; border-radius: 22px; background: #F4F4F1; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 16px">
+<div style="font-size: 16px; font-weight: 700">Сколько тонн?</div>
+<div style="display: flex; align-items: center; gap: 4px">
+<button onClick="{{minus}}" aria-label="Меньше" style="width: 44px; height: 44px; border-radius: 14px; border: none; background: #FFFFFF; font-size: 24px; font-weight: 600; color: #111111; cursor: pointer">−</button>
+<div style="width: 50px; text-align: center; font-size: 21px; font-weight: 800">{{qty}}</div>
+<button onClick="{{plus}}" aria-label="Больше" style="width: 44px; height: 44px; border-radius: 14px; border: none; background: #FFFFFF; font-size: 24px; font-weight: 600; color: #111111; cursor: pointer">+</button>
+</div>
+</div>
+<div style="margin-top: 14px; font-size: 13px; font-weight: 600; color: #6B6A63">Сколько ждать</div>
+<div style="margin-top: 6px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{waits}}" as="w">
+<button onClick="{{w.pick}}" aria-pressed="{{w.aria}}" style="height: 46px; border-radius: 14px; border: none; background: {{w.bg}}; color: {{w.fg}}; font-family: 'Onest', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer">{{w.label}}</button>
+</sc-for>
+</div>
+<div style="margin-top: 14px; border-radius: 20px; background: #F4F4F1; padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+<div style="font-size: 14px; line-height: 1.4">Как только цена дойдёт до нужной, купим сами и пришлём уведомление. Деньги спишем только в момент покупки.</div>
+</div>
+<div style="position: absolute; left: 20px; right: 20px; bottom: 24px">
+<a href="#Y3Orders" style="height: 64px; border-radius: 22px; background: #111111; color: #FFFFFF; display: flex; align-items: center; justify-content: space-between; padding: 0 20px">
+<div style="font-size: 17px; font-weight: 800">Включить</div>
+<div style="font-size: 15px; font-weight: 700; color: #FFDD2D">до {{sum}} сум</div>
+</a>
+</div>
+</div>
+</template>
+<template id="Y3Orders">
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: #FFFFFF; font-family: 'Onest', sans-serif; color: #111111; padding: 24px 20px 0">
+<h1 style="margin: 6px 0 0; font-size: 32px; font-weight: 800; letter-spacing: -1px">Мои заказы</h1>
+<div style="margin-top: 14px; display: flex; gap: 8px">
+<div style="height: 36px; padding: 0 14px; border-radius: 999px; background: #111111; color: #FFFFFF; font-size: 14px; font-weight: 600; display: flex; align-items: center">Активные&nbsp;</div>
+<div style="height: 36px; padding: 0 14px; border-radius: 999px; background: #F4F4F1; color: #111111; font-size: 14px; font-weight: 600; display: flex; align-items: center">История</div>
+</div>
+<h2 style="margin: 22px 0 0; font-size: 19px; font-weight: 800">Текущий заказ</h2>
+<a href="#Y4Track" style="margin-top: 10px; display: block; border-radius: 30px; background: #FFDD2D; overflow: hidden">
+<div style="padding: 20px 20px 0">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<div style="height: 28px; padding: 0 12px; border-radius: 999px; background: #111111; color: #FFDD2D; font-size: 13px; font-weight: 700; display: flex; align-items: center">В пути</div>
+<div style="font-size: 14px; font-weight: 600; color: #3D3A2A">Проехали 62%</div>
+</div>
+<div style="margin-top: 12px; font-size: 26px; font-weight: 800; letter-spacing: -0.6px">Цемент, 40 тонн</div>
+<div style="margin-top: 4px; font-size: 16px; font-weight: 500">Приедет завтра в 14:00</div>
+</div>
+<div style="position: relative; height: 112px; margin-top: 12px">
+<svg width="350" height="112" viewBox="0 0 350 112" role="img" aria-label="Мини-карта: машина проехала 62% пути из Самарканда в Ташкент" style="position: absolute; left: 0; top: 0">
+<line x1="30" y1="72" x2="320" y2="72" stroke="rgba(17,17,17,0.22)" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 10"></line>
+<line x1="30" y1="72" x2="210" y2="72" stroke="#111111" stroke-width="5" stroke-linecap="round"></line>
+<circle cx="30" cy="72" r="8" fill="#FFDD2D" stroke="#111111" stroke-width="3"></circle>
+<circle cx="320" cy="72" r="9" fill="#111111"></circle>
+<text x="18" y="102" font-family="Onest, sans-serif" font-size="13" font-weight="600" fill="#3D3A2A">Самарканд</text>
+<text x="332" y="102" text-anchor="end" font-family="Onest, sans-serif" font-size="13" font-weight="600" fill="#3D3A2A">Ташкент</text>
+</svg>
+<img src="/img/truck.png" alt="" style="position: absolute; left: 168px; top: 14px; width: 84px; height: 54px; object-fit: contain; filter: drop-shadow(0 6px 6px rgba(17,17,17,0.2))">
+</div>
+<div style="margin: 12px 16px 16px; height: 54px; border-radius: 18px; background: #111111; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; font-weight: 700">
+Следить на карте
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFDD2D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+</div>
+</a>
+<h2 style="margin: 22px 0 0; font-size: 19px; font-weight: 800">Ждём хорошую цену</h2>
+<a href="#N5AutoBuy" style="margin-top: 10px; border-radius: 24px; background: #F4F4F1; padding: 14px 16px; display: flex; align-items: center; gap: 14px">
+<div style="width: 48px; height: 48px; border-radius: 16px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 16px; font-weight: 700">Сахар, 5 тонн</div>
+<div style="font-size: 13px; color: #6B6A63">Купим сами, когда цена дойдёт до 15,5 млн</div>
+</div>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+</a>
+<nav aria-label="Главное меню" style="position: absolute; left: 16px; right: 16px; bottom: 20px; height: 68px; border-radius: 24px; background: #111111; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 0 6px; box-sizing: border-box; align-items: center">
+<a href="#Y1Home" aria-label="Рынок" style="height: 52px; display: flex; align-items: center; justify-content: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>
+</a>
+<a href="#Y3Orders" style="height: 52px; margin: 0 4px; border-radius: 18px; background: #FFDD2D; display: flex; align-items: center; justify-content: center; gap: 6px; color: #111111; font-size: 14px; font-weight: 700">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"></path><path d="M3 8l9 5 9-5"></path><path d="M12 13v8"></path></svg>
+Заказы
+</a>
+<a href="#Y1Home" aria-label="Продать" style="height: 52px; display: flex; align-items: center; justify-content: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>
+</a>
+</nav>
+</div>
+</template>
+<template id="Y4Track">
+<div style="position: relative; width: 390px; height: 844px; overflow: hidden; background: #F1F0EB; font-family: 'Onest', sans-serif; color: #111111">
+<svg width="480" height="500" viewBox="0 0 480 500" role="img" aria-label="Карта трассы M39: машина едет из Самарканда в Ташкент и сейчас между Джизаком и Гулистаном" style="position: absolute; left: 0; top: 0">
+<rect width="480" height="500" fill="#F1F0EB"></rect>
+<path d="M150 500 C190 440 240 400 300 380 S370 350 400 330 S450 305 480 296 L480 500 Z" fill="#E8E5DB"></path>
+<path d="M190 500 C220 460 260 430 310 412 S370 390 400 380 S450 366 480 360" fill="none" stroke="#DDD9CC" stroke-width="1.5"></path>
+<path d="M0 300 C40 280 80 262 120 250 S150 238 150 232 C120 236 70 246 30 262 S0 280 0 284 Z" fill="#E8E5DB"></path>
+<path d="M34 142 C70 126 120 120 168 130 C150 146 100 156 60 158 S30 152 34 142 Z" fill="#D9E7EE"></path>
+<text x="70" y="146" font-family="Onest, sans-serif" font-size="10" font-weight="500" fill="#7D97A4">Айдаркуль</text>
+<path d="M370 300 C350 270 300 200 272 150 S268 110 250 70 S226 22 214 -10" fill="none" stroke="#CFE1EA" stroke-width="6" stroke-linecap="round"></path>
+<text x="352" y="326" font-family="Onest, sans-serif" font-size="10" font-weight="500" fill="#7D97A4" transform="rotate(-56 352 326)">р. Сырдарья</text>
+<path d="M-10 424 C30 410 70 398 104 388 S160 380 200 372" fill="none" stroke="#CFE1EA" stroke-width="4" stroke-linecap="round"></path>
+<path d="M283 222 L338 276 L390 300 L480 342" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"></path>
+<path d="M343 60 L390 84 L480 130" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"></path>
+<path d="M161 296 L120 200 L100 120" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"></path>
+<polyline points="47,390 87,368 130,320 161,296 221,260 252,241 283,222 276,186 270,152 282,132 320,98 343,60" fill="none" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></polyline>
+<polyline points="252,241 283,222 276,186 270,152 282,132 320,98 343,60" fill="none" stroke="#A9A699" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 9"></polyline>
+<polyline points="47,390 87,368 130,320 161,296 221,260 252,241" fill="none" stroke="#111111" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></polyline>
+<rect x="176" y="268" width="34" height="18" rx="5" fill="#111111"></rect>
+<text x="193" y="281" text-anchor="middle" font-family="Onest, sans-serif" font-size="11" font-weight="700" fill="#FFDD2D">M39</text>
+<circle cx="161" cy="296" r="5" fill="#FFFFFF" stroke="#111111" stroke-width="2.5"></circle>
+<text x="122" y="316" font-family="Onest, sans-serif" font-size="13" font-weight="600" fill="#4E4D47">Джизак</text>
+<circle cx="283" cy="222" r="5" fill="#FFFFFF" stroke="#8C8A80" stroke-width="2"></circle>
+<text x="294" y="226" font-family="Onest, sans-serif" font-size="13" font-weight="600" fill="#6B6A63">Гулистан</text>
+<circle cx="270" cy="152" r="4" fill="#FFFFFF" stroke="#8C8A80" stroke-width="2"></circle>
+<text x="210" y="156" font-family="Onest, sans-serif" font-size="11" font-weight="500" fill="#8A8980">Сырдарья</text>
+<circle cx="282" cy="132" r="4" fill="#FFFFFF" stroke="#8C8A80" stroke-width="2"></circle>
+<text x="292" y="136" font-family="Onest, sans-serif" font-size="11" font-weight="500" fill="#8A8980">Чиназ</text>
+<circle cx="320" cy="98" r="4" fill="#FFFFFF" stroke="#8C8A80" stroke-width="2"></circle>
+<text x="252" y="102" font-family="Onest, sans-serif" font-size="11" font-weight="500" fill="#8A8980">Янгиюль</text>
+<circle cx="47" cy="390" r="9" fill="#FFFFFF" stroke="#111111" stroke-width="4"></circle>
+<text x="20" y="420" font-family="Onest, sans-serif" font-size="14" font-weight="700" fill="#111111">Самарканд</text>
+<circle cx="343" cy="60" r="12" fill="#111111" stroke="#FFFFFF" stroke-width="4"></circle>
+<text x="268" y="40" font-family="Onest, sans-serif" font-size="15" font-weight="800" fill="#111111">Ташкент</text>
+</svg>
+<div aria-hidden="true" style="position: absolute; left: 224px; top: 213px; width: 56px; height: 56px; border-radius: 50%; background: #FFDD2D; animation: halo3 1.8s ease-out infinite"></div>
+<img src="/img/truck-top.png" alt="Фура на трассе" style="position: absolute; left: 240px; top: 205px; width: 24px; height: 72px; object-fit: contain; transform: rotate(58deg); filter: drop-shadow(0 4px 6px rgba(17,17,17,0.35))">
+<div style="position: absolute; left: 292px; top: 252px; padding: 6px 10px; border-radius: 12px; background: #111111; color: #FFFFFF; font-size: 12px; font-weight: 600; line-height: 1.3">
+<div>72 км/ч</div>
+<div style="color: #FFDD2D">Осталось 115 км</div>
+</div>
+<a href="#Y3Orders" aria-label="Назад" style="position: absolute; left: 20px; top: 20px; width: 44px; height: 44px; border-radius: 14px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(17,17,17,0.1)">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+</a>
+<div style="position: absolute; left: 0; right: 0; top: 466px; bottom: 0; box-sizing: border-box; border-radius: 32px 32px 0 0; background: #FFFFFF; padding: 12px 20px 0; box-shadow: 0 -10px 30px rgba(17,17,17,0.08)">
+<div style="width: 40px; height: 5px; border-radius: 3px; background: #E6E4DC; margin: 0 auto"></div>
+<div style="margin-top: 14px; font-size: 15px; font-weight: 600; color: #6B6A63">Цемент, 40 тонн</div>
+<div style="margin-top: 2px; font-size: 30px; font-weight: 800; letter-spacing: -1px">Приедет завтра в 14:00</div>
+<div style="margin-top: 14px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+<div style="height: 6px; border-radius: 3px; background: #111111"></div>
+<div style="height: 6px; border-radius: 3px; background: #FFDD2D"></div>
+<div style="height: 6px; border-radius: 3px; background: #EFEFEA"></div>
+<div style="font-size: 13px; font-weight: 600; color: #6B6A63">Загружено</div>
+<div style="font-size: 13px; font-weight: 800; color: #111111">В пути</div>
+<div style="font-size: 13px; font-weight: 600; color: #6B6A63">Доставлено</div>
+</div>
+<div style="margin-top: 16px; height: 64px; box-sizing: border-box; border-radius: 20px; background: #F4F4F1; display: flex; align-items: center; gap: 12px; padding: 0 10px 0 12px">
+<div style="width: 42px; height: 42px; border-radius: 50%; background: #111111; color: #FFDD2D; display: flex; align-items: center; justify-content: center; font-weight: 800">Д</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 15px; font-weight: 700">Джамшид, водитель</div>
+<div style="font-size: 13px; color: #6B6A63">Едут 2 машины вместе</div>
+</div>
+<button aria-label="Позвонить водителю" style="width: 44px; height: 44px; border-radius: 14px; border: none; background: #FFDD2D; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg>
+</button>
+</div>
+<div style="margin-top: 10px; border-radius: 20px; background: #FFF6CC; padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+<div style="font-size: 14px; line-height: 1.4"><b>37 млн сум хранятся на бирже.</b> Продавец получит их, когда вы примете груз.</div>
+</div>
+<a href="#N3Details" style="position: absolute; left: 20px; right: 20px; bottom: 24px; height: 56px; border-radius: 20px; background: #111111; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; font-weight: 700">
+Подробнее о заказе
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFDD2D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+</a>
+</div>
+</div>
+</template>
+<template id="N3Details">
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: #FFFFFF; font-family: 'Onest', sans-serif; color: #111111; padding: 20px 20px 0">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<a href="#Y4Track" aria-label="Назад" style="width: 44px; height: 44px; border-radius: 14px; background: #F4F4F1; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+</a>
+<h1 style="margin: 0; font-size: 17px; font-weight: 700">Заказ № 21-0412</h1>
+<div style="width: 44px"></div>
+</div>
+<div style="margin-top: 14px; height: 44px; border-radius: 16px; background: #FFDD2D; display: flex; align-items: center; gap: 10px; padding: 0 14px; font-size: 15px; font-weight: 700">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="6" width="14" height="10" rx="2"></rect><path d="M15 9h4l4 4v3h-8z"></path><circle cx="6" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg>
+В пути, приедет завтра в 14:00
+</div>
+<h2 style="margin: 16px 0 6px; font-size: 13px; font-weight: 600; color: #6B6A63">Сделка</h2>
+<div style="border-radius: 20px; background: #F4F4F1; padding: 2px 16px">
+<div style="height: 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E8E8E2; font-size: 14px"><div style="color: #6B6A63">Товар</div><div style="font-weight: 600">Цемент М400, 40 тонн</div></div>
+<div style="height: 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E8E8E2; font-size: 14px"><div style="color: #6B6A63">Продавец</div><div style="font-weight: 600">Qabechuz Stroy, проверен</div></div>
+<div style="height: 40px; display: flex; align-items: center; justify-content: space-between; font-size: 14px"><div style="color: #6B6A63">Цена за тонну</div><div style="font-weight: 600">927 334 сум до двери</div></div>
+</div>
+<h2 style="margin: 14px 0 6px; font-size: 13px; font-weight: 600; color: #6B6A63">Доставка</h2>
+<div style="border-radius: 20px; background: #F4F4F1; padding: 2px 16px">
+<div style="height: 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E8E8E2; font-size: 14px"><div style="color: #6B6A63">Куда</div><div style="font-weight: 600">Ташкент, Нукус 12</div></div>
+<div style="height: 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E8E8E2; font-size: 14px"><div style="color: #6B6A63">Машины</div><div style="font-weight: 600">2 фуры по 20 тонн</div></div>
+<div style="height: 40px; display: flex; align-items: center; justify-content: space-between; font-size: 14px"><div style="color: #6B6A63">Выехали</div><div style="font-weight: 600">Сегодня в 08:10 из Самарканда</div></div>
+</div>
+<h2 style="margin: 14px 0 6px; font-size: 13px; font-weight: 600; color: #6B6A63">Деньги</h2>
+<div style="border-radius: 20px; background: #FFF6CC; padding: 12px 16px; display: flex; gap: 12px; align-items: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+<div>
+<div style="font-size: 17px; font-weight: 800">37 093 354 сум на бирже</div>
+<div style="font-size: 13px; color: #3D3A2A">Уйдут продавцу после вашего подтверждения</div>
+</div>
+</div>
+<h2 style="margin: 14px 0 6px; font-size: 13px; font-weight: 600; color: #6B6A63">Документы</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<div style="height: 48px; border-radius: 16px; border: 1px solid #EFEFEA; display: flex; align-items: center; gap: 8px; padding: 0 12px; font-size: 14px; font-weight: 600">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+Договор
+</div>
+<div style="height: 48px; border-radius: 16px; border: 1px solid #EFEFEA; display: flex; align-items: center; gap: 8px; padding: 0 12px; font-size: 14px; font-weight: 600">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+Счёт-фактура
+</div>
+</div>
+<div style="position: absolute; left: 20px; right: 20px; bottom: 22px; display: flex; flex-direction: column; gap: 8px">
+<button disabled style="height: 56px; border-radius: 20px; border: none; background: #EFEFEA; color: #8A8980; font-family: 'Onest', sans-serif; font-size: 16px; font-weight: 700">Груз доставлен, закрыть заказ</button>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #6B6A63">
+<div>Кнопка включится, когда машина приедет</div>
+<a href="#N4Arrived" style="font-weight: 700; color: #111111; text-decoration: underline">Демо: приехала</a>
+</div>
+</div>
+</div>
+</template>
+<template id="N4Arrived">
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: #FFFFFF; font-family: 'Onest', sans-serif; color: #111111; padding: 20px 20px 0">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<a href="#N3Details" aria-label="Назад" style="width: 44px; height: 44px; border-radius: 14px; background: #F4F4F1; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+</a>
+<div style="font-size: 17px; font-weight: 700">Заказ № 21-0412</div>
+<div style="width: 44px"></div>
+</div>
+<sc-if value="{{notDone}}">
+<div style="margin-top: 14px; height: 150px; border-radius: 30px; background: #FFDD2D; display: flex; align-items: center; justify-content: center">
+<img src="/img/truck.png" alt="Грузовик у склада" style="width: 200px; height: 128px; object-fit: contain; filter: drop-shadow(0 10px 12px rgba(17,17,17,0.25))">
+</div>
+<h1 style="margin: 18px 0 0; font-size: 30px; font-weight: 800; letter-spacing: -0.8px">Груз приехал</h1>
+<div style="margin-top: 4px; font-size: 15px; color: #6B6A63">Сегодня в 13:42, Ташкент, Нукус 12</div>
+<h2 style="margin: 18px 0 8px; font-size: 15px; font-weight: 700">Проверьте перед приёмкой</h2>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{checks}}" as="c">
+<button onClick="{{c.toggle}}" aria-pressed="{{c.aria}}" style="height: 54px; border-radius: 18px; border: none; background: #F4F4F1; display: flex; align-items: center; gap: 12px; padding: 0 14px; text-align: left; font-family: 'Onest', sans-serif; font-size: 15px; font-weight: 600; color: #111111; cursor: pointer">
+<div style="width: 26px; height: 26px; border-radius: 8px; background: {{c.boxBg}}; border: 2px solid #111111; box-sizing: border-box; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="{{c.tick}}" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+</div>
+{{c.label}}
+</button>
+</sc-for>
+</div>
+<div style="margin-top: 12px; font-size: 13px; color: #6B6A63; line-height: 1.4">После подтверждения 37 093 354 сум уйдут продавцу. Если что-то не так, деньги останутся на бирже, а груз проверит инспектор.</div>
+<div style="position: absolute; left: 20px; right: 20px; bottom: 24px; display: flex; flex-direction: column; gap: 10px">
+<button onClick="{{close}}" disabled="{{notReady}}" style="height: 60px; border-radius: 22px; border: none; background: {{closeBg}}; color: {{closeFg}}; font-family: 'Onest', sans-serif; font-size: 17px; font-weight: 800; cursor: pointer">Всё в порядке, закрыть заказ</button>
+<button style="height: 50px; border-radius: 18px; border: none; background: #F4F4F1; color: #111111; font-family: 'Onest', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer">Есть проблема</button>
+</div>
+</sc-if>
+<sc-if value="{{done}}">
+<div style="margin-top: 60px; display: flex; flex-direction: column; align-items: center; text-align: center">
+<div style="width: 120px; height: 120px; border-radius: 50%; background: #111111; display: flex; align-items: center; justify-content: center">
+<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#FFDD2D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+</div>
+<h1 style="margin: 22px 0 0; font-size: 30px; font-weight: 800; letter-spacing: -0.8px">Заказ закрыт</h1>
+<div style="margin-top: 6px; font-size: 15px; color: #6B6A63; line-height: 1.4">37 093 354 сум переданы продавцу.<br>Документы сохранены в истории.</div>
+<div style="margin-top: 26px; font-size: 15px; font-weight: 700">Как вам продавец?</div>
+<div style="margin-top: 10px; display: flex; gap: 8px">
+<sc-for list="{{stars}}" as="s">
+<button onClick="{{s.pick}}" aria-label="{{s.aria}}" style="width: 52px; height: 52px; border-radius: 16px; border: none; background: {{s.bg}}; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="{{s.fill}}" stroke="#111111" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"></path></svg>
+</button>
+</sc-for>
+</div>
+</div>
+<a href="#Y3Orders" style="position: absolute; left: 20px; right: 20px; bottom: 24px; height: 60px; border-radius: 22px; background: #111111; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 800">Готово</a>
+</sc-if>
+</div>
+</template>
 </body>
 </html>
