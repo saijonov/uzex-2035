@@ -43,12 +43,18 @@ def parse_quantity(t: str) -> float | None:
     return None
 
 
-def parse_money(t: str) -> list[tuple[float, bool]]:
+COMPOUND = re.compile(NUMBER + r"\s*(?:mln|млн)\s*(\d+)\s*(?:ming|тыс)")
+
+
+def parse_money(t: str, bare: bool = False) -> list[tuple[float, bool]]:
     found = []
+    t = COMPOUND.sub(
+        lambda m: f"{to_float(m.group(1)) * 1_000_000 + int(m.group(2)) * 1_000:.0f} so'm", t
+    )
     for m in re.finditer(NUMBER + r"\s*(mln|млн|million|миллион|ming|тыс|k\b)?", t):
         raw, unit = m.group(1), m.group(2)
         tail = t[m.end() : m.end() + 25]
-        if unit is None and not re.match(r"\s*(so'm|сум|sum|so‘m)", tail):
+        if unit is None and not bare and not re.match(r"\s*(so'm|сум|sum|so‘m)", tail):
             continue
         value = to_float(raw)
         if unit in ("mln", "млн", "million", "миллион"):
@@ -88,14 +94,18 @@ def parse_restricted(t: str) -> str | None:
     return None
 
 
-def parse(text: str, today: date | None = None) -> Draft:
+def parse(text: str, today: date | None = None, asked: str | None = None) -> Draft:
     today = today or date.today()
     t = normalize(text)
     product, cement = parse_product(t)
     quantity = parse_quantity(t)
+    if quantity is None and asked == "quantity":
+        bare = re.search(NUMBER, t)
+        quantity = to_float(bare.group(1)) if bare else None
     limit = budget = None
-    for value, per_tonne in parse_money(t):
-        if per_tonne or value < 3_000_000:
+    total = bool(re.search(r"hammasi|jami|всего|итого|бюджет|byudjet", t))
+    for value, per_tonne in parse_money(t, bare=asked == "limit"):
+        if per_tonne or (not total and (asked == "limit" or value < 3_000_000)):
             limit = value
         else:
             budget = value

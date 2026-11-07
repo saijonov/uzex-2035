@@ -42,6 +42,7 @@ class Session:
     lang: str = "uz"
     draft: Draft = field(default_factory=Draft)
     history: list[dict] = field(default_factory=list)
+    asked: str | None = None
 
 
 def guess_lang(text: str, fallback: str) -> str:
@@ -64,11 +65,12 @@ class Intake:
             self.sessions[session_id] = Session(session_id)
         return self.sessions[session_id]
 
-    def understand(self, message: str, previous: Draft) -> tuple[Draft, str]:
-        rules = parse(message, self.today())
+    def understand(self, message: str, s: Session) -> tuple[Draft, str]:
+        rules = parse(message, self.today(), s.asked)
         if self.settings.openai_api_key.get_secret_value():
             try:
-                update = ai_parse(message, previous, self.settings, self.today())
+                question = s.history[-1]["text"] if s.history else None
+                update = ai_parse(message, s.draft, self.settings, self.today(), question)
                 return replace(update, restricted=rules.restricted), "ai"
             except Exception as error:
                 logger.warning("AI intake failed, using rules: %s", error)
@@ -77,7 +79,7 @@ class Intake:
     def handle(self, session_id: str, message: str, lang: str = "uz") -> dict:
         s = self.session(session_id)
         s.lang = guess_lang(message, lang) if lang not in ("uz", "ru") else lang
-        update, source = self.understand(message, s.draft)
+        update, source = self.understand(message, s)
         s.draft = s.draft.merge(update)
         if update.restricted:
             s.draft = replace(s.draft, restricted=update.restricted)
@@ -97,6 +99,7 @@ class Intake:
         question = None
         missing = draft.missing()
         stopped = blocked and bool(draft.restricted or (draft.other_product and not draft.product))
+        s.asked = missing[0] if missing and not stopped else None
         if missing and not stopped:
             first = missing[0]
             if first == "product":

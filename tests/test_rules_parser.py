@@ -42,6 +42,18 @@ def test_restricted_goods_are_detected():
     assert parse("Нужна пшеница 30 тонн", SATURDAY).restricted == "wheat"
 
 
+def test_answer_to_the_price_question_is_the_limit():
+    assert parse("1 mln 100 ming dan oshmasin", SATURDAY, asked="limit").limit == pytest.approx(
+        1_100_000
+    )
+    assert parse("1100000", SATURDAY, asked="limit").limit == pytest.approx(1_100_000)
+    assert parse("hammasi 4 mln", SATURDAY, asked="limit").budget == pytest.approx(4_000_000)
+
+
+def test_bare_number_answers_the_quantity_question():
+    assert parse("12", SATURDAY, asked="quantity").quantity == 12
+
+
 def test_merge_keeps_earlier_answers():
     first = Draft().merge(parse("M400 sement 5 tonna", SATURDAY))
     second = first.merge(parse("Namanganga", SATURDAY))
