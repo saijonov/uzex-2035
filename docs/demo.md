@@ -5,14 +5,21 @@ boshlash" in Xaridlarim so the cement truck is half way and the flour has arrive
 
 | Time | What to show |
 |---|---|
-| 0:00–0:25 | Today a small business needs a broker, a desktop terminal and a contract number to buy cement on UZEX. |
-| 0:25–1:00 | Bozor: search "shakar". Price chart for a year. Four sellers, each with the price delivered to your city and how often they deliver on time. |
-| 1:00–1:50 | AI button: "Samarqandga 10 tonna shakar kerak". Nobody has 10 t. The AI gathers 5 + 2 + 3 t from three sellers, cheapest delivered first, with every fee shown. Confirm. |
-| 1:50–2:25 | Map: three trucks from Namangan, Nurafshon and Andijon driving to Samarqand on real roads. The money is blocked on the exchange until you confirm. |
-| 2:25–2:45 | Flour order: arrived, press "Yukni qabul qildim", money goes to the seller. |
-| 2:45–3:00 | "10 tonna paxta kerak" is refused with the reason. 2035: every exchange good, one tap, no broker. |
+| 0:00–0:20 | Today a small business needs a broker, a desktop terminal and a contract number to buy cement on UZEX. |
+| 0:20–0:30 | Open the bot: two buttons, Xaridorman and Sotuvchiman. Pick Xaridorman. |
+| 0:30–0:55 | Search "shakar": a year of prices, sellers with the price delivered to your city and how often they deliver on time. |
+| 0:55–1:35 | AI: "Samarqandga 10 tonna shakar kerak". Nobody has 10 t; the AI gathers 5 + 2 + 3 t from three sellers. The card shows the shared-truck delivery next to what an own truck would cost. Confirm. |
+| 1:35–1:55 | Map: three trucks driving to Samarqand on real roads. Money is blocked until you accept. |
+| 1:55–2:10 | Flour page: "Birga olish" — a truck 15 of 20 t full, join with 5 t, delivery about 20× cheaper. |
+| 2:10–2:45 | Switch to Sotuvchiman. Talab: what buyers lack, where, and what is left after delivery. Send an offer: "Xaridor puli bloklangan ✓". Press "Yukni jo'natdim". |
+| 2:45–3:00 | 2035: buyers and sellers meet on the exchange directly. Many sellers → one buyer, many buyers → one truck, money safe on both sides. |
 
 ## Likely jury questions
+
+- **Where do sellers come from?** They see demand the market cannot fill, with the buyer's money already blocked. They
+  never chase a buyer for payment.
+- **Is shared delivery real?** It is how groupage freight works. The app prices every order as a share of a 20 t truck and
+  shows what an own truck would cost. Other buyers in the truck are demo data.
 
 - **Isn't this just an online shop?** The shop part is on purpose: it is what people already know. What is new: one
   request is filled from many sellers, every price includes delivery, the money is held by the exchange until delivery,

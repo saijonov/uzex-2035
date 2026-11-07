@@ -58,3 +58,26 @@ Purchases are kept in the phone's browser storage. In the demo a day of driving 
 the point along the road route at that share of the trip. In a real app it would come from the carrier's GPS.
 
 Payment states: blocked on the exchange → loaded → arrived → buyer confirms → paid to sellers and carriers.
+
+## Shared trucks (Birga olish)
+
+A truck carries 20 t and costs road km × 9,000 so'm for the trip (450 so'm per tonne-km × 20 t).
+
+- Shared: each buyer pays tonnes × km × 450, the share of a full truck. All prices in the app use this.
+- Own truck: the whole trip, shown next to it so the saving is visible.
+- Each product page shows a truck to your region that other buyers are filling (demo numbers: 6–15 t taken by 2–5
+  buyers) and a button to join with the room that is left.
+
+## Seller side
+
+- **Requests.** For every good, the two regions where the cheapest delivered price is highest (furthest from sellers)
+  get a buyer request. Tonnes and buyer count are demo numbers. The most a buyer pays is that delivered price plus
+  1–5%. When a buyer presses "Kutaman" in the chat, the missing tonnes appear at the top of the seller list as "Yangi".
+- **What is left for the seller:** the buyer's maximum minus delivery from the seller's warehouse.
+- **Offer.** The seller sets tonnes and a warehouse price. Fees: 0.05% exchange and 0.05% clearing, the seller rates
+  from 1 October 2026. If the price plus delivery is above the buyer's maximum, the offer cannot be sent.
+- **Deal.** In the demo the buyer accepts at once. The buyer's money is shown as blocked on the exchange, the seller
+  presses "Yukni jo'natdim", the truck moves on the map, and a few seconds after it arrives the buyer accepts and the
+  payout lands.
+- **Listing with AI.** The chat reads good, tonnes, warehouse region and price, then compares the price with the weekly
+  market median (within 5% counts as in line) and names the nearest request for that good.
