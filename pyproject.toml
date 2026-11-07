@@ -1,13 +1,11 @@
 [project]
-name = "niyat"
-version = "0.1.0"
-description = "Intent exchange prototype for the UZEX AI Hackathon 2026 final"
+name = "bozor"
+version = "0.2.0"
+description = "Commodity marketplace demo for the UZEX AI Hackathon 2026 final"
 requires-python = ">=3.12,<3.14"
 dependencies = [
   "fastapi>=0.115,<1",
   "uvicorn>=0.32,<1",
-  "numpy>=2,<3",
-  "scipy>=1.14,<2",
   "openai>=2,<3",
   "pydantic>=2.9,<3",
   "pydantic-settings>=2.6,<3",
@@ -16,15 +14,12 @@ dependencies = [
 [dependency-groups]
 dev = ["pytest>=8.3,<10", "httpx>=0.27,<1", "ruff>=0.8,<1", "duckdb>=1.1,<2"]
 
-[project.scripts]
-niyat = "niyat.cli:main"
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/niyat"]
+packages = ["src/bozor"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
