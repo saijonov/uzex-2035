@@ -1,6 +1,8 @@
 # UzCom pitch deck
 
-12 slides, 1920 × 1080, in Russian, built from the team style guide (Onest, white, yellow #FFDD2D, ink #111111).
+12 slides, 1920 × 1080, built from the team style guide (Onest, white, yellow #FFDD2D, ink #111111).
+`index.html` is in Russian and `uz.html` in Uzbek (Latin, with oʻ and gʻ). Both share `deck.css` and `deck.js`.
+The app screenshots stay in Russian, as the app is.
 
 | # | Slide |
 |---|---|
@@ -21,7 +23,7 @@ cd pitch
 python3 -m http.server 8037
 ```
 
-Open http://localhost:8037. Press F to present one slide at a time; arrows move, Esc leaves.
+Open http://localhost:8037 for Russian or http://localhost:8037/uz.html for Uzbek. Press F to present one slide at a time; arrows move, Esc leaves.
 
 ## Import into Figma
 
