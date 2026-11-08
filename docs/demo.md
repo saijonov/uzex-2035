@@ -7,6 +7,7 @@ to be reset before the pitch.
 |---|---|
 | 0:00–0:20 | Today a small business needs a broker, a desktop terminal and a contract number to buy cement on UZEX. |
 | 0:20–0:35 | Open UzCom from the bot. Рынок: search, the cement already on its way, popular goods with the price per tonne. |
+| 0:35–0:55 | Tap the yellow button in search: AI-брокер. Ask "Проверь продавца цемента", then "Закажи 10 тонн цемента": the order card is ready to confirm. The broker's job, in a chat. |
 | 0:35–1:00 | Цемент М400: drag along the chart, switch 3 months / 1 year. The yellow line is the price delivered to the door. Pick 10 t. |
 | 1:00–1:10 | The bell: "buy when it gets cheaper". Set a target price; the app buys by itself. Back. |
 | 1:10–1:40 | Купить. Подтверждение: shared truck saves 180 000 so'm and goes alone at no extra cost if it does not fill in 2 days. Every fee is shown. Pay with Click and confirm with MyID. |
@@ -22,5 +23,7 @@ to be reset before the pitch.
 - **Who holds the money?** The exchange, through clearing. The seller is paid only after the buyer accepts the cargo.
 - **Is shared delivery real?** It is how groupage freight works. If the truck does not fill in 2 days, it goes anyway
   at no extra cost to the buyer.
+- **What does the AI do, and can it make mistakes?** It advises, checks and prepares the order. It never sets
+  prices: the server prices every order, and the buyer confirms with MyID.
 - **Where do the numbers come from?** They are demo values for the prototype. The fees are the UZEX tariff: 0.13% for
   the buyer and 0.05% clearing.

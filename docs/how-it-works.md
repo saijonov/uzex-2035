@@ -13,6 +13,21 @@ The app is three static files served by a small FastAPI server (`src/uzcom/app.p
   After a tap it patches the page in place, so dragging a slider is never interrupted.
 - A link to `#Name` opens that screen.
 
+## AI broker
+
+The yellow button in the search bar, or a tap on the search field, opens AI-брокер. It does the broker's job:
+
+- advice: when to buy, using the price, the month change and the year low;
+- help: fees, shared truck, documents, how the money is held;
+- checking: the seller's deals and on-time share, the price against the exchange average;
+- ordering: "Закажи 10 тонн цемента" gives an order card to confirm with MyID.
+
+Each message is one OpenAI call (`src/uzcom/broker.py`) with a forced function `answer(reply, order_good,
+order_tonnes)`. The model only writes the reply and picks the good and tonnes; the server prices the order with the
+same numbers as the checkout screen (10 t of cement is 9 273 338 so'm). It answers in Russian or Uzbek. Without a key,
+after an error or over the limits (1,500 calls a day, 40 per user) simple keyword rules answer instead, so the demo
+never stops. Sellers, deals and on-time shares for flour, sugar and rebar are demo values like the rest.
+
 ## Fitting the phone
 
 The design is 390 × 844. The app scales it to the screen width. When the window is shorter (Telegram shows its own

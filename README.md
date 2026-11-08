@@ -16,8 +16,10 @@ Mini App inside the team bot and as an iPhone app (Expo). The screens are in Rus
 | В пути | Map of the route, the driver, money held on the exchange |
 | Заказ № 21-0412 | Deal, delivery, money and documents |
 | Груз приехал | Checklist before accepting, close the order, rate the seller |
+| AI-брокер | Opens from the search bar. Advises when to buy, checks sellers and prices, answers questions, prepares an order |
 
-This is a demo, not a working product: the numbers are fixed demo values.
+This is a demo, not a working product: the numbers are fixed demo values. The AI broker calls OpenAI when
+`OPENAI_API_KEY` is set in `.env` (see `.env.example`) and falls back to simple rules otherwise.
 
 ## Run
 
