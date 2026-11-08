@@ -26,10 +26,10 @@
 <div style="margin-top: 18px; height: 60px; border-radius: 20px; background: #F4F4F1; display: flex; align-items: center; gap: 10px; padding: 0 8px 0 18px">
 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
 <label for="q3" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Что купить</label>
-<input id="q3" placeholder="Что купить? Цемент, мука…" style="flex: 1; min-width: 0; height: 44px; border: none; outline: none; background: transparent; font-family: 'Onest', sans-serif; font-size: 17px; color: #111111">
-<button aria-label="Сказать голосом" style="width: 44px; height: 44px; border-radius: 14px; border: none; background: #FFDD2D; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path><line x1="12" y1="18" x2="12" y2="22"></line></svg>
-</button>
+<input id="q3" placeholder="Что купить? Цемент, мука…" readonly onClick="{{ask}}" style="flex: 1; min-width: 0; height: 44px; border: none; outline: none; background: transparent; font-family: 'Onest', sans-serif; font-size: 17px; color: #111111">
+<a href="#N6Assistant" aria-label="AI-брокер" style="width: 44px; height: 44px; border-radius: 14px; border: none; background: #FFDD2D; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"></path><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"></path></svg>
+</a>
 </div>
 <a href="#Y4Track" style="margin-top: 16px; height: 84px; box-sizing: border-box; border-radius: 26px; background: #FFDD2D; display: flex; align-items: center; gap: 14px; padding: 0 18px 0 14px">
 <img src="/img/truck.png" alt="" style="width: 88px; height: 58px; object-fit: contain; flex-shrink: 0; margin-left: -2px; filter: drop-shadow(0 6px 8px rgba(17,17,17,0.22))">
@@ -580,6 +580,73 @@
 </div>
 <a href="#Y3Orders" style="position: absolute; left: 20px; right: 20px; bottom: 24px; height: 60px; border-radius: 22px; background: #111111; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 800">Готово</a>
 </sc-if>
+</div>
+</template>
+<template id="N6Assistant">
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: #FFFFFF; font-family: 'Onest', sans-serif; color: #111111; padding: 20px 20px 0">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<a href="#Y1Home" aria-label="Назад" style="width: 44px; height: 44px; border-radius: 14px; background: #F4F4F1; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+</a>
+<div style="text-align: center">
+<h1 style="margin: 0; font-size: 17px; font-weight: 700">AI-брокер</h1>
+<div style="font-size: 12px; color: #6B6A63">Советует, проверяет, заказывает</div>
+</div>
+<div style="width: 44px"></div>
+</div>
+<div data-end style="position: absolute; left: 0; right: 0; top: 76px; bottom: 100px; overflow-y: auto; padding: 8px 20px 16px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; gap: 12px; align-items: flex-start; border-radius: 22px; background: #FFF6CC; padding: 14px 16px">
+<div style="width: 40px; height: 40px; border-radius: 14px; background: #FFDD2D; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"></path><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"></path></svg>
+</div>
+<div style="font-size: 15px; line-height: 1.4"><b>Я делаю работу брокера.</b> Подскажу, когда выгодно купить, проверю продавца и цену, отвечу на вопросы и оформлю заказ.</div>
+</div>
+<sc-if value="{{empty}}">
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 4px">
+<sc-for list="{{chips}}" as="c">
+<button onClick="{{c.pick}}" style="min-height: 40px; padding: 8px 16px; border-radius: 999px; border: none; background: #F4F4F1; color: #111111; font-family: 'Onest', sans-serif; font-size: 15px; font-weight: 600; text-align: left; cursor: pointer">{{c.text}}</button>
+</sc-for>
+</div>
+</sc-if>
+<sc-for list="{{messages}}" as="m">
+<div style="align-self: {{m.align}}; max-width: 86%; border-radius: 20px; background: {{m.bg}}; color: {{m.fg}}; padding: 12px 16px; font-size: 16px; line-height: 1.4; white-space: pre-wrap">{{m.text}}</div>
+<sc-if value="{{m.order}}">
+<div style="align-self: stretch; border: 2px solid #EFEFEA; border-radius: 22px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 48px; height: 48px; border-radius: 16px; background: #FFF3B0; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<sc-if value="{{m.cement}}"><img src="/img/cement.png" alt="" style="width: 28px; height: 38px; object-fit: contain"></sc-if>
+<sc-if value="{{m.other}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"></path><path d="M3 8l9 5 9-5"></path><path d="M12 13v8"></path></svg></sc-if>
+</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 16px; font-weight: 800">{{m.order.title}}</div>
+<div style="font-size: 13px; color: #6B6A63">{{m.order.seller}}</div>
+</div>
+</div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><div style="color: #6B6A63">Товар</div><div>{{m.order.goods}} сум</div></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><div style="color: #6B6A63">Доставка, общая машина</div><div>{{m.order.delivery}} сум</div></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><div style="color: #6B6A63">Комиссия биржи 0,13%</div><div>{{m.order.exchange}} сум</div></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><div style="color: #6B6A63">Клиринг 0,05%</div><div>{{m.order.clearing}} сум</div></div>
+<div style="display: flex; justify-content: space-between; font-size: 17px; font-weight: 800; border-top: 1px solid #EFEFEA; padding-top: 10px"><div>Итого</div><div>{{m.order.total}} сум</div></div>
+<sc-if value="{{m.open}}">
+<button onClick="{{m.confirm}}" style="height: 52px; border-radius: 18px; border: none; background: #111111; color: #FFFFFF; font-family: 'Onest', sans-serif; font-size: 16px; font-weight: 800; cursor: pointer">Подтвердить через <span style="color: #FFDD2D">MyID</span></button>
+</sc-if>
+<sc-if value="{{m.done}}">
+<a href="#Y3Orders" style="height: 52px; border-radius: 18px; background: #FFDD2D; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800">Заказ {{m.number}} принят, мои заказы</a>
+</sc-if>
+</div>
+</sc-if>
+</sc-for>
+<sc-if value="{{busy}}">
+<div style="align-self: flex-start; border-radius: 20px; background: #F4F4F1; color: #6B6A63; padding: 12px 16px; font-size: 16px">Думаю…</div>
+</sc-if>
+</div>
+<form onSubmit="{{send}}" style="position: absolute; left: 16px; right: 16px; bottom: 24px; height: 60px; border-radius: 20px; background: #F4F4F1; display: flex; align-items: center; gap: 10px; padding: 0 8px 0 18px; margin: 0">
+<label for="ai-text" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Вопрос AI-брокеру</label>
+<input id="ai-text" value="{{text}}" onChange="{{type}}" placeholder="Спросите или закажите…" autocomplete="off" enterkeyhint="send" style="flex: 1; min-width: 0; height: 44px; border: none; outline: none; background: transparent; font-family: 'Onest', sans-serif; font-size: 17px; color: #111111">
+<button aria-label="Отправить" style="width: 44px; height: 44px; border-radius: 14px; border: none; background: #FFDD2D; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"></path><path d="m5 12 7-7 7 7"></path></svg>
+</button>
+</form>
 </div>
 </template>
 </body>

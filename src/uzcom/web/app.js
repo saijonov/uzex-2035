@@ -3,7 +3,70 @@ const page = document.getElementById('screen')
 const HOLE = /\{\{\s*([^}]+?)\s*\}\}/g
 const fmt = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
+const CHIPS = ['Когда выгодно купить цемент?', 'Проверь продавца цемента', 'Закажи 10 тонн цемента', 'Какие документы нужны?']
+const chat = { messages: [], busy: false, text: '', next: 459 }
+
+async function ask (text) {
+  const question = text.trim().slice(0, 1000)
+  if (!question || chat.busy) return
+  chat.messages.push({ role: 'user', text: question })
+  chat.text = ''
+  chat.busy = true
+  render()
+  try {
+    const response = await fetch('/api/ai', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ messages: chat.messages.slice(-12).map(({ role, text }) => ({ role, text: text.slice(0, 1000) })) })
+    })
+    if (!response.ok) throw new Error(String(response.status))
+    const { reply, order } = await response.json()
+    chat.messages.push({ role: 'assistant', text: reply, order })
+  } catch {
+    chat.messages.push({ role: 'assistant', text: 'Нет связи. Попробуйте ещё раз.' })
+  }
+  chat.busy = false
+  if (current === 'N6Assistant') render()
+}
+
+function place (message) {
+  message.number = '№ 21-0' + chat.next++
+  chat.messages.push({
+    role: 'assistant',
+    text: `Готово, заказ ${message.number}. ${message.order.total} сум заморожены на бирже: продавец получит их, когда вы примете груз.`
+  })
+  render()
+}
+
 const LOGIC = {
+  Y1Home () {
+    return { ask: () => go('N6Assistant') }
+  },
+
+  N6Assistant () {
+    return {
+      empty: !chat.messages.length,
+      busy: chat.busy,
+      text: chat.text,
+      chips: CHIPS.map(text => ({ text, pick: () => ask(text) })),
+      messages: chat.messages.map(m => ({
+        text: m.text,
+        align: m.role === 'user' ? 'flex-end' : 'flex-start',
+        bg: m.role === 'user' ? '#111111' : '#F4F4F1',
+        fg: m.role === 'user' ? '#FFFFFF' : '#111111',
+        order: m.order,
+        cement: m.order?.good === 'cement',
+        other: Boolean(m.order) && m.order.good !== 'cement',
+        open: Boolean(m.order) && !m.number,
+        done: Boolean(m.number),
+        number: m.number,
+        confirm: () => place(m)
+      })),
+      type: e => { chat.text = e.target.value },
+      send: () => ask(chat.text)
+    }
+  },
+
   Y2Product (st, set) {
     const qty = st.qty ?? 10
     const range = st.range ?? 26
@@ -266,6 +329,7 @@ function render () {
   build(document.getElementById(current).content, [LOGIC[current]?.(state, set) ?? {}], box)
   morph(page, box)
   fit()
+  page.querySelector('[data-end]')?.scrollTo(0, 1e6)
 }
 
 function set (patch) {
@@ -293,6 +357,12 @@ page.addEventListener('click', event => {
     go(link.getAttribute('href').slice(1))
   }
   if (target || link) tg?.HapticFeedback.selectionChanged()
+})
+
+page.addEventListener('submit', event => {
+  event.preventDefault()
+  const target = event.target.closest('[data-on-submit]')
+  if (target) handlers[target.dataset.onSubmit](event)
 })
 
 page.addEventListener('input', event => {
