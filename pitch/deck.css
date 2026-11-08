@@ -58,7 +58,7 @@ body { margin: 0; background: #E9E8E3; font-family: var(--font); color: var(--in
 .pains .h3 { margin-bottom: 8px; }
 
 .split { display: grid; grid-template-columns: 780px 1fr; gap: 80px; height: 100%; }
-.points { display: flex; flex-direction: column; gap: 28px; margin-top: 48px; }
+.points { display: flex; flex-direction: column; gap: 20px; margin-top: 40px; }
 .point { display: flex; gap: 24px; align-items: center; }
 .point .body { font-size: 28px; font-weight: 600; }
 .circle-760 { position: absolute; right: 150px; top: 160px; width: 760px; height: 760px; border-radius: 50%; background: var(--yellow); }
@@ -115,3 +115,5 @@ body.present { background: #000000; overflow: hidden; }
 body.present .deck { display: block; padding: 0; }
 body.present .slide { display: none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(var(--scale, 1)); }
 body.present .slide.on { display: block; }
+.app-screen { width: 390px; height: 844px; zoom: .8923; }
+.ai-bullets { gap: 20px; margin-top: 36px; }
