@@ -1,20 +1,21 @@
 # UzCom pitch deck
 
-12 slides, 1920 × 1080, built from the team style guide (Onest, white, yellow #FFDD2D, ink #111111).
+13 slides, 1920 × 1080, built from the team style guide (Onest, white, yellow #FFDD2D, ink #111111).
 `index.html` is in Russian and `uz.html` in Uzbek (Latin, with oʻ and gʻ). Both share `deck.css` and `deck.js`.
 The app screenshots stay in Russian, as the app is.
 
 | # | Slide |
 |---|---|
-| 1 | Title: UzCom, Команда 21, pixel Said with "Это другой Саид" |
+| 1 | Title: UzCom with the AI broker, Команда 21, pixel Said with "Это другой Саид" |
 | 2 | Problem: Said has 15 restaurants; today's path through two brokers |
-| 3 | Solution: UzCom in Said's phone |
+| 3 | Solution: UzCom in Said's phone, AI broker included |
 | 4 | Abroad: Pinduoduo, Full Truck Alliance, e-NAM |
-| 5–8 | App: choose, auto-buy, pay, track and accept |
-| 9 | Why now and why us |
-| 10 | Questions the jury may ask, answered first |
-| 11 | Team (replace the letters with photos) |
-| 12 | Quote by Alan Kay, QR code to the bot |
+| 5 | AI broker: advises, answers, checks, orders; two live screens of the app |
+| 6–9 | App: choose, auto-buy, pay, track and accept |
+| 10 | Why now and why us |
+| 11 | Questions the jury may ask, answered first, including "what if the AI is wrong" |
+| 12 | Team (replace the letters with photos) |
+| 13 | Quote by Alan Kay, QR code to the bot |
 
 ## Open and present
 
@@ -29,6 +30,11 @@ Open http://localhost:8037 for Russian or http://localhost:8037/uz.html for Uzbe
 
 Use the html.to.design plugin with its Chrome extension on the open page. Every slide is its own 1920 × 1080 block,
 so each one becomes a frame. Team photos: replace the letter circles on slide 11.
+
+## AI broker slide
+
+The two phones on slide 5 are not pictures: they are the app's own HTML, saved from real conversations with the AI
+broker on 8 November 2026 (Russian in `index.html`, Uzbek in `uz.html`), so they stay sharp and editable in Figma.
 
 ## Pixel Said
 
