@@ -108,7 +108,9 @@ def svg(g, scale, label):
             end = x
             while end < len(row) and row[end] == ch:
                 end += 1
-            rects.append(f'<rect x="{x}" y="{y}" width="{end - x}" height="1" fill="{COLORS[ch]}"/>')
+            rects.append(
+                f'<rect x="{x}" y="{y}" width="{end - x}" height="1" fill="{COLORS[ch]}"/>'
+            )
             x = end
     w, h = len(g[0]), len(g)
     return (
