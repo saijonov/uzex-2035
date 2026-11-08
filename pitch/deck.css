@@ -117,3 +117,11 @@ body.present .slide { display: none; position: fixed; left: 50%; top: 50%; trans
 body.present .slide.on { display: block; }
 .app-screen { width: 390px; height: 844px; zoom: .8923; }
 .ai-bullets { gap: 20px; margin-top: 36px; }
+
+@page { size: 1920px 1080px; margin: 0; }
+@media print {
+  body { background: #FFFFFF; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .deck { display: block; padding: 0; }
+  .slide { break-after: page; }
+  .phone { box-shadow: none; }
+}
